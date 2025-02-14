@@ -12,7 +12,7 @@ Resources:
         - Key: Project
           Value: salsa-tracker
           
-  UIS3BucketPolicy:
+  SalsaS3BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref S3Bucket
