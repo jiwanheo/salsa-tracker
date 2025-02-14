@@ -1,5 +1,5 @@
 Resources:
-  S3Bucket:
+  SalsaS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: salsa-tracker
@@ -12,22 +12,22 @@ Resources:
         - Key: Project
           Value: salsa-tracker
           
-  SalsaS3BucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref S3Bucket
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Sid: PublicReadGetObject
-            Effect: Allow
-            Principal: "*"
-            Action: "s3:GetObject"
-            Resource: !Sub "arn:aws:s3:::${S3Bucket}/*"
+  # SalsaS3BucketPolicy:
+  #   Type: AWS::S3::BucketPolicy
+  #   Properties:
+  #     Bucket: !Ref SalsaS3Bucket
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Sid: PublicReadGetObject
+  #           Effect: Allow
+  #           Principal: "*"
+  #           Action: "s3:GetObject"
+  #           Resource: !Sub "arn:aws:s3:::${SalsaS3Bucket}/*"
 
 Outputs:
   SalsaS3BucketName:
     Description: The domain name of the S3 bucket
-    Value: !Ref S3Bucket
+    Value: !Ref SalsaS3Bucket
     Export:
       Name: SalsaS3BucketName
