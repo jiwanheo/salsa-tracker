@@ -12,18 +12,18 @@ Resources:
         - Key: Project
           Value: salsa-tracker
           
-  # SalsaS3BucketPolicy:
-  #   Type: AWS::S3::BucketPolicy
-  #   Properties:
-  #     Bucket: !Ref SalsaS3Bucket
-  #     PolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #         - Sid: PublicReadGetObject
-  #           Effect: Allow
-  #           Principal: "*"
-  #           Action: "s3:GetObject"
-  #           Resource: !Sub "arn:aws:s3:::${SalsaS3Bucket}/*"
+  SalsaS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref SalsaS3Bucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${SalsaS3Bucket}/*"
 
 Outputs:
   SalsaS3BucketName:
