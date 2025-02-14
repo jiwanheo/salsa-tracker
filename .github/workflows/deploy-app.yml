@@ -38,6 +38,6 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ui/build/ s3://salsa-tracker --exact-timestamps --delete 
+          aws s3 sync ui/public/ s3://salsa-tracker --exact-timestamps --delete 
         
         
