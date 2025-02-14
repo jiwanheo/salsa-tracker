@@ -26,8 +26,8 @@ Resources:
             Resource: !Sub "arn:aws:s3:::${S3Bucket}/*"
 
 Outputs:
-  S3BucketName:
+  SalsaS3BucketName:
     Description: The domain name of the S3 bucket
     Value: !Ref S3Bucket
     Export:
-      Name: S3BucketName
+      Name: SalsaS3BucketName
