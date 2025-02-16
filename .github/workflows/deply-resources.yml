@@ -99,7 +99,7 @@ jobs:
       run: |
         aws lambda create-function \
           --function-name SalsaTrackerFunction \
-          --runtime python3.11.3 \
+          --runtime python3.11 \
           --handler SalsaTrackerFunction.lambda_handler \
           --zip-file fileb://functions.zip \
           --role $ROLE_ARN
