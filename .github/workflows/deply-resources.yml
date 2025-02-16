@@ -32,9 +32,9 @@ jobs:
           --region us-east-1 \
           --tags Project=salsa-tracker
 
-    # - name: Deploy API Stack
-    #   run: |
-    #     aws cloudformation deploy \
-    #       --template-file cloudformation/spotify_api.yml \
-    #       --stack-name spotifyPlaylistGetter-APIStack \
-    #       --capabilities CAPABILITY_NAMED_IAM
+    - name: Deploy CDN/DNS stack
+      run: |
+        aws cloudformation deploy \
+          --template-file cloudformation/cdn-dns.yml \
+          --stack-name salsaTracker-cdndnsStack \
+          --capabilities CAPABILITY_NAMED_IAM
