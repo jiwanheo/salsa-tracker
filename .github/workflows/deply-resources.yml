@@ -61,6 +61,24 @@ jobs:
           --region us-east-1 \
           --tags Project=salsa-tracker
     
+    # Stack 5
+    - name: Deploy Lambda Role Stack
+      run: |
+        aws cloudformation deploy \
+          --template-file cloudformation/lambda-role.yml \
+          --stack-name salsaTracker-LambdaRoleStack \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --region us-east-1 \
+          --tags Project=salsa-tracker
+
+    - name: Get Lambda Role ARN
+        run: |
+          ROLE_ARN=$(aws cloudformation describe-stacks \
+            --stack-name salsaTracker-LambdaRoleStack \
+            --query "Stacks[0].Outputs[?OutputKey=='SalsaLambdaExecutionRoleARN'].OutputValue" \
+            --output text)
+          echo "ROLE_ARN=$ROLE_ARN" >> $GITHUB_ENV
+
     # Upload Python code to lambda
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -85,7 +103,7 @@ jobs:
         else
           echo "exists=false" >> $GITHUB_ENV
         fi
-
+    
     - name: Create Lambda function if it does not exist
       if: env.exists == 'false'
       run: |
@@ -93,7 +111,8 @@ jobs:
           --function-name SalsaTrackerFunction \
           --runtime python3.11.3 \
           --handler SalsaTrackerFunction.lambda_handler \
-          --zip-file fileb://functions.zip
+          --zip-file fileb://functions.zip |
+          --role $ROLE_ARN
 
     - name: Deploy Lambda function
       uses: appleboy/lambda-action@v0.2.0
@@ -102,3 +121,4 @@ jobs:
         zip_file: functions.zip
         aws_region: us-east-1
         timeout: 60
+        role: ${{ env.ROLE_ARN }}

@@ -1,0 +1,45 @@
+Resources:
+  # We're creating Lambda function in the CI/CD pipeline, right before this stack runs
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: SalsaTrackerLambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaDynamoDBAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource: 
+                  - !ImportValue SalsaTracker-Categories-ARN
+                  # - arn:aws:dynamodb:us-east-1:123456789012:table/Moves
+                  # - arn:aws:dynamodb:us-east-1:123456789012:table/UserMoves
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+
+Outputs:
+  SalsaLambdaExecutionRoleARN:
+    Description: ARN of the Lambda Role
+    Value: !GetAtt LambdaExecutionRole.Arn
+    Export:
+      Name: SalsaLambdaExecutionRoleARN
