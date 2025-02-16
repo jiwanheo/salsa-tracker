@@ -101,7 +101,7 @@ jobs:
           --function-name SalsaTrackerFunction \
           --runtime python3.11.3 \
           --handler SalsaTrackerFunction.lambda_handler \
-          --zip-file fileb://functions.zip |
+          --zip-file fileb://functions.zip \
           --role $ROLE_ARN
 
     - name: Deploy Lambda function
