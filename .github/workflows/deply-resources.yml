@@ -63,9 +63,9 @@ jobs:
     
     # Upload Python code to lambda
     - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8  # Adjust to the version you're using in Lambda
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8  # Adjust to the version you're using in Lambda
 
     - name: Install dependencies
       run: |

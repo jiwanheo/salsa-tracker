@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main # Trigger on push to main branch
+    paths:
+      - 'ui/**'
   pull_request:
     branches:
       - main # Trigger on PRs targeting the main branch
-
+    paths:
+      - 'ui/**'
+      
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest # This specifies the environment the job will run in
