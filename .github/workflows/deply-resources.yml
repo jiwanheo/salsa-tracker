@@ -77,11 +77,28 @@ jobs:
         cd lambda
         zip -r ../functions.zip .
 
+    - name: Check if Lambda function exists
+      id: check_lambda
+      run: |
+        if aws lambda get-function --function-name SalsaTrackerFunction > /dev/null 2>&1; then
+          echo "exists=true" >> $GITHUB_ENV
+        else
+          echo "exists=false" >> $GITHUB_ENV
+        fi
+
+    - name: Create Lambda function if it does not exist
+      if: env.exists == 'false'
+      run: |
+        aws lambda create-function \
+          --function-name SalsaTrackerFunction \
+          --runtime python3.11.3 \
+          --handler SalsaTrackerFunction.lambda_handler \
+          --zip-file fileb://functions.zip
+
     - name: Deploy Lambda function
       uses: appleboy/lambda-action@v0.2.0
       with:
         function_name: SalsaTrackerFunction  
-        handler: SalsaTrackerFunction.lambda_handler
         zip_file: functions.zip
         aws_region: us-east-1
         timeout: 60
