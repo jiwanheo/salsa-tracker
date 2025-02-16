@@ -1,4 +1,5 @@
 Resources:
+  # We're creating Lambda function in the CI/CD pipeline, right before this stack runs
   LambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
