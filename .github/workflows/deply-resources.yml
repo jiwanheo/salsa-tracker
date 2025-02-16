@@ -80,7 +80,7 @@ jobs:
     - name: Deploy Lambda function
       uses: appleboy/lambda-action@v0.2.0
       with:
-        function-name: SalsaTrackerFunction  
-        zip-file: function.zip
+        function_name: SalsaTrackerFunction  
+        zip_file: function.zip
         region: us-east-1
         timeout: 60
