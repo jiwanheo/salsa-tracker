@@ -4,7 +4,7 @@ Resources:
   CategoriesTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: Categories
+      TableName: SalsaTracker-Categories
       AttributeDefinitions:
         - AttributeName: PK
           AttributeType: S
