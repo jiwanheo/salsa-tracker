@@ -51,9 +51,7 @@ Resources:
         HttpVersion: http2
         PriceClass: PriceClass_100 # Use the cheapest price class (optional)
         Logging:
-          Bucket: !Sub
-            - "${ImportedS3BucketName}.s3.amazonaws.com"
-            - ImportedS3BucketName: !ImportValue SalsaS3DomainName
+          Bucket: !ImportValue SalsaS3DomainName
           IncludeCookies: false
           Prefix: "cloudfront-logs/"
       Tags:
