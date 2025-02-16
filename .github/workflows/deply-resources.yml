@@ -78,7 +78,7 @@ jobs:
         zip -r ../functions.zip .
 
     - name: Deploy Lambda function
-      uses: aws-actions/aws-lambda-deploy@v1
+      uses: appleboy/lambda-action@v0.2.0
       with:
         function-name: SalsaTrackerFunction  
         zip-file: function.zip
