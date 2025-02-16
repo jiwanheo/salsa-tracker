@@ -40,11 +40,11 @@ jobs:
           --capabilities CAPABILITY_NAMED_IAM \
           --parameter-overrides AcmCertificateArn=${{ secrets.ACM_CERTIFICATE_ARN }}
     
-    - name: Deploy DynamoDB Stack
+    - name: Deploy DB Stack
       run: |
         aws cloudformation deploy \
-          --template-file cloudformation/dynamodb.yml \
-          --stack-name salsaTracker-DynamoDBStack \
+          --template-file cloudformation/db.yml \
+          --stack-name salsaTracker-DBStack \
           --capabilities CAPABILITY_NAMED_IAM \
           --region us-east-1 \
           --tags Project=salsa-tracker
