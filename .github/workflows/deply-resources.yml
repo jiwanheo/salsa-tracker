@@ -72,12 +72,12 @@ jobs:
           --tags Project=salsa-tracker
 
     - name: Get Lambda Role ARN
-        run: |
-          ROLE_ARN=$(aws cloudformation describe-stacks \
-            --stack-name salsaTracker-LambdaRoleStack \
-            --query "Stacks[0].Outputs[?OutputKey=='SalsaLambdaExecutionRoleARN'].OutputValue" \
-            --output text)
-          echo "ROLE_ARN=$ROLE_ARN" >> $GITHUB_ENV
+      run: |
+        ROLE_ARN=$(aws cloudformation describe-stacks \
+          --stack-name salsaTracker-LambdaRoleStack \
+          --query "Stacks[0].Outputs[?OutputKey=='SalsaLambdaExecutionRoleARN'].OutputValue" \
+          --output text)
+        echo "ROLE_ARN=$ROLE_ARN" >> $GITHUB_ENV
 
     # Upload Python code to lambda
     - name: Set up Python
