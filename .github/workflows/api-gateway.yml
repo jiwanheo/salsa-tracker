@@ -1,0 +1,47 @@
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: SalsaTrackerLambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaDynamoDBAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource: 
+                  - !ImportValue SalsaTracker-Categories-ARN
+                  # - arn:aws:dynamodb:us-east-1:123456789012:table/Moves
+                  # - arn:aws:dynamodb:us-east-1:123456789012:table/UserMoves
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: SalsaTrackerFunction
+      Handler: SalsaTrackerFunction.lambda_handler
+      Role: arn:aws:iam::123456789012:role/lambda-execution-role  # Replace with your Lambda execution role ARN
+      Runtime: python3.8
+      Timeout: 10  # Adjust based on your function's needs
+      # We'll update the code from outside the stack, in the CI/CD pipeline.

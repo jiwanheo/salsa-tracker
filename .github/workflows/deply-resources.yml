@@ -22,7 +22,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
     
-    # Deploy CloudFormation Stack for S3
+    # Stack 1
     - name: Deploy S3 Stack
       run: |
         aws cloudformation deploy \
@@ -32,6 +32,7 @@ jobs:
           --region us-east-1 \
           --tags Project=salsa-tracker
 
+    # Stack 2
     - name: Deploy CDN/DNS stack
       run: |
         aws cloudformation deploy \
@@ -40,6 +41,7 @@ jobs:
           --capabilities CAPABILITY_NAMED_IAM \
           --parameter-overrides AcmCertificateArn=${{ secrets.ACM_CERTIFICATE_ARN }}
     
+    # Stack 3
     - name: Deploy DB Stack
       run: |
         aws cloudformation deploy \
@@ -48,3 +50,35 @@ jobs:
           --capabilities CAPABILITY_NAMED_IAM \
           --region us-east-1 \
           --tags Project=salsa-tracker
+    
+    # Stack 4
+    - name: Deploy API Gateway Stack
+      run: |
+        aws cloudformation deploy \
+          --template-file cloudformation/api-gateway.yml \
+          --stack-name salsaTracker-APIStack \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --region us-east-1 \
+          --tags Project=salsa-tracker
+    
+    # Upload Python code to lambda
+    - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8  # Adjust to the version you're using in Lambda
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r lambda/requirements.txt
+
+    - name: Zip Lambda Function
+        run: |
+          cd lambda
+          zip -r ../functions.zip .
+
+    - name: Upload Lambda Code Directly
+      run: |
+        aws lambda update-function-code \
+          --function-name SalsaTrackerFunction \
+          --zip-file fileb://functions.zip

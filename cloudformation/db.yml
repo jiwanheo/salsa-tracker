@@ -50,3 +50,10 @@ Resources:
   #       - AttributeName: SK
   #         KeyType: RANGE
   #     BillingMode: PAY_PER_REQUEST
+  
+Outputs:
+  CategoriesTableArn:
+    Description: ARN of the Categories DynamoDB Table
+    Value: !GetAtt CategoriesTable.Arn
+    Export:
+      Name: SalsaTracker-Categories-ARN
