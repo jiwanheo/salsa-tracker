@@ -50,17 +50,7 @@ jobs:
           --capabilities CAPABILITY_NAMED_IAM \
           --region us-east-1 \
           --tags Project=salsa-tracker
-    
-    # Stack 4
-    - name: Deploy API Gateway Stack
-      run: |
-        aws cloudformation deploy \
-          --template-file cloudformation/api-gateway.yml \
-          --stack-name salsaTracker-APIStack \
-          --capabilities CAPABILITY_NAMED_IAM \
-          --region us-east-1 \
-          --tags Project=salsa-tracker
-    
+        
     # Stack 5
     - name: Deploy Lambda Role Stack
       run: |
@@ -122,3 +112,13 @@ jobs:
         aws_region: us-east-1
         timeout: 60
         role: ${{ env.ROLE_ARN }}
+  
+    # # Stack 4
+    # - name: Deploy API Gateway Stack
+    #   run: |
+    #     aws cloudformation deploy \
+    #       --template-file cloudformation/api-gateway.yml \
+    #       --stack-name salsaTracker-APIStack \
+    #       --capabilities CAPABILITY_NAMED_IAM \
+    #       --region us-east-1 \
+    #       --tags Project=salsa-tracker
