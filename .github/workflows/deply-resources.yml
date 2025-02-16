@@ -81,6 +81,7 @@ jobs:
       uses: appleboy/lambda-action@v0.2.0
       with:
         function_name: SalsaTrackerFunction  
+        handler: SalsaTrackerFunction.lambda_handler
         zip_file: functions.zip
         aws_region: us-east-1
         timeout: 60
