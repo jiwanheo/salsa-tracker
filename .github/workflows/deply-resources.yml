@@ -73,9 +73,9 @@ jobs:
         pip install -r lambda/requirements.txt
 
     - name: Zip Lambda Function
-        run: |
-          cd lambda
-          zip -r ../functions.zip .
+      run: |
+        cd lambda
+        zip -r ../functions.zip .
 
     - name: Upload Lambda Code Directly
       run: |
