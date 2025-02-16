@@ -1,10 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  LambdaFunctionArn:
+    Type: String
+    Description: ARN of the deployed Lambda function
+
 Resources:
-  # LambdaFunction:
-  #   Type: AWS::Lambda::Function
-  #   Properties:
-  #     FunctionName: SalsaTrackerFunction
-  #     Handler: SalsaTrackerFunction.lambda_handler
-  #     Role: arn:aws:iam::123456789012:role/lambda-execution-role  # Replace with your Lambda execution role ARN
-  #     Runtime: python3.8
-  #     Timeout: 10  # Adjust based on your function's needs
-  #     # We'll update the code from outside the stack, in the CI/CD pipeline.
+  SalsaTrackerApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: SalsaTrackerAPI
+
+  CategoriesResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref SalsaTrackerApi
+      ParentId: !GetAtt SalsaTrackerApi.RootResourceId
+      PathPart: categories  # Creates /categories
+
+  GetCategoriesMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref SalsaTrackerApi
+      ResourceId: !Ref CategoriesResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunctionArn}/invocations"
+          - LambdaFunctionArn: !Ref LambdaFunctionArn
+
+  PostCategoriesMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref SalsaTrackerApi
+      ResourceId: !Ref CategoriesResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunctionArn}/invocations"
+          - LambdaFunctionArn: !Ref LambdaFunctionArn
+
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - GetCategoriesMethod
+      - PostCategoriesMethod
+    Properties:
+      RestApiId: !Ref SalsaTrackerApi
+      StageName: prod  
+
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LambdaFunctionArn
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com

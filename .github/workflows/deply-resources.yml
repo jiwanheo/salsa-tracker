@@ -51,7 +51,7 @@ jobs:
           --region us-east-1 \
           --tags Project=salsa-tracker
         
-    # Stack 5
+    # Stack 4
     - name: Deploy Lambda Role Stack
       run: |
         aws cloudformation deploy \
@@ -69,7 +69,7 @@ jobs:
           --output text)
         echo "ROLE_ARN=$ROLE_ARN" >> $GITHUB_ENV
 
-    # Upload Python code to lambda
+    # Deploy Lambda
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -112,13 +112,20 @@ jobs:
         aws_region: us-east-1
         timeout: 60
         role: ${{ env.ROLE_ARN }}
-  
-    # # Stack 4
-    # - name: Deploy API Gateway Stack
-    #   run: |
-    #     aws cloudformation deploy \
-    #       --template-file cloudformation/api-gateway.yml \
-    #       --stack-name salsaTracker-APIStack \
-    #       --capabilities CAPABILITY_NAMED_IAM \
-    #       --region us-east-1 \
-    #       --tags Project=salsa-tracker
+
+    - name: Get Lambda ARN
+      id: get_lambda_arn
+      run: |
+        ARN=$(aws lambda get-function --function-name SalsaTrackerFunction --query 'Configuration.FunctionArn' --output text)
+        echo "LAMBDA_ARN=$ARN" >> $GITHUB_ENV
+
+    # Stack 5
+    - name: Deploy API Gateway Stack
+      run: |
+        aws cloudformation deploy \
+          --template-file cloudformation/api-gateway.yml \
+          --stack-name salsaTracker-APIStack \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --region us-east-1 \
+          --parameter-overrides LambdaFunctionArn=$LAMBDA_ARN \
+          --tags Project=salsa-tracker
