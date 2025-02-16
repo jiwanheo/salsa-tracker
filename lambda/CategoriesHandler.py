@@ -39,7 +39,7 @@ def add_category(event, context):
             'body': json.dumps({'message': 'Error adding category'})
         }
 
-def get_all_categories(event, context):
+def get_all_categories(event=None, context=None):
     try:
         response = table.query(
             KeyConditionExpression=boto3.dynamodb.conditions.Key('PK').begins_with('category#')
