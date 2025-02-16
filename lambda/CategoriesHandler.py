@@ -41,9 +41,7 @@ def add_category(event, context):
 
 def get_all_categories(event=None, context=None):
     try:
-        response = table.query(
-            KeyConditionExpression=boto3.dynamodb.conditions.Key('PK').begins_with('category#')
-        )
+        response = table.scan()
 
         # If no categories found
         if not response.get('Items'):
