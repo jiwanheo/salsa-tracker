@@ -77,8 +77,10 @@ jobs:
         cd lambda
         zip -r ../functions.zip .
 
-    - name: Upload Lambda Code Directly
-      run: |
-        aws lambda update-function-code \
-          --function-name SalsaTrackerFunction \
-          --zip-file fileb://functions.zip
+    - name: Deploy Lambda function
+      uses: aws-actions/aws-lambda-deploy@v1
+      with:
+        function-name: SalsaTrackerFunction  
+        zip-file: function.zip
+        region: us-east-1
+        timeout: 60

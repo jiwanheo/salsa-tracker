@@ -36,12 +36,12 @@ Resources:
                   - logs:PutLogEvents
                 Resource: "*"
 
-  LambdaFunction:
-    Type: AWS::Lambda::Function
-    Properties:
-      FunctionName: SalsaTrackerFunction
-      Handler: SalsaTrackerFunction.lambda_handler
-      Role: arn:aws:iam::123456789012:role/lambda-execution-role  # Replace with your Lambda execution role ARN
-      Runtime: python3.8
-      Timeout: 10  # Adjust based on your function's needs
-      # We'll update the code from outside the stack, in the CI/CD pipeline.
+  # LambdaFunction:
+  #   Type: AWS::Lambda::Function
+  #   Properties:
+  #     FunctionName: SalsaTrackerFunction
+  #     Handler: SalsaTrackerFunction.lambda_handler
+  #     Role: arn:aws:iam::123456789012:role/lambda-execution-role  # Replace with your Lambda execution role ARN
+  #     Runtime: python3.8
+  #     Timeout: 10  # Adjust based on your function's needs
+  #     # We'll update the code from outside the stack, in the CI/CD pipeline.
