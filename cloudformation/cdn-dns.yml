@@ -1,5 +1,10 @@
 Description: Set up CloudFront Distribution and Route53 DNS for the static site
 
+Parameters:
+  AcmCertificateArn:
+    Type: String
+    Description: The ARN of the ACM Certificate for CloudFront
+
 Resources:
   MyCloudFrontOAC:
     Type: AWS::CloudFront::OriginAccessControl
@@ -11,49 +16,49 @@ Resources:
         SigningBehavior: "always"
         SigningProtocol: "sigv4" # Use AWS Signature Version 4 (sigv4)
 
-  # CloudFrontDistribution:
-  #   Type: AWS::CloudFront::Distribution
-  #   Properties:
-  #     DistributionConfig:
-  #       Aliases:
-  #         - salsa.jiwanheo.xyz
-  #       Origins:
-  #         - Id: S3Origin
-  #           DomainName: !ImportValue SalsaS3DomainName
-  #           S3OriginConfig:
-  #             # AWS docs instruct to leave this field empty if using OAC instead of OAI
-  #             OriginAccessIdentity: ""
-  #           OriginAccessControlId: !Ref MyCloudFrontOAC # Use OAC here
-  #       Enabled: true
-  #       DefaultCacheBehavior:
-  #         TargetOriginId: S3Origin
-  #         ViewerProtocolPolicy: redirect-to-https # Ensure HTTPS is enforced
-  #         AllowedMethods:
-  #           - GET
-  #           - HEAD
-  #         CachedMethods:
-  #           - GET
-  #           - HEAD
-  #         ForwardedValues:
-  #           QueryString: false # Do not forward query strings to S3
-  #           Cookies:
-  #             Forward: none # Do not forward cookies
-  #       ViewerCertificate:
-  #         AcmCertificateArn: !ImportValue MySSLCertificateStack-CertificateArn
-  #         SslSupportMethod: sni-only
-  #         MinimumProtocolVersion: TLSv1.2_2021
-  #       DefaultRootObject: index.html
-  #       HttpVersion: http2
-  #       PriceClass: PriceClass_100 # Use the cheapest price class (optional)
-  #       Logging:
-  #         Bucket: !Sub
-  #           - "${BucketName}.s3.amazonaws.com"
-  #           - BucketName: !ImportValue SalsaS3DomainName
-  #         IncludeCookies: false
-  #         Prefix: "cloudfront-logs/"
-  #     Tags:
-  #       - Key: Project
-  #         Value: jiwanheo.com
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - salsa-tracker.jiwanheo.xyz
+        Origins:
+          - Id: S3Origin
+            DomainName: !ImportValue SalsaS3DomainName
+            S3OriginConfig:
+              # AWS docs instruct to leave this field empty if using OAC instead of OAI
+              OriginAccessIdentity: ""
+            OriginAccessControlId: !Ref MyCloudFrontOAC # Use OAC here
+        Enabled: true
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https # Ensure HTTPS is enforced
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          ForwardedValues:
+            QueryString: false # Do not forward query strings to S3
+            Cookies:
+              Forward: none # Do not forward cookies
+        ViewerCertificate:
+          AcmCertificateArn: !Ref AcmCertificateArn
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2021
+        DefaultRootObject: index.html
+        HttpVersion: http2
+        PriceClass: PriceClass_100 # Use the cheapest price class (optional)
+        Logging:
+          Bucket: !Sub
+            - "${ImportedS3BucketName}.s3.amazonaws.com"
+            - ImportedS3BucketName: !ImportValue SalsaS3DomainName
+          IncludeCookies: false
+          Prefix: "cloudfront-logs/"
+      Tags:
+        - Key: Project
+          Value: salsa-tracker
 
 #   CloudFrontLogBucketPolicy:
 #     Type: AWS::S3::BucketPolicy

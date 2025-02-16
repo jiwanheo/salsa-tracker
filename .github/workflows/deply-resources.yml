@@ -37,4 +37,5 @@ jobs:
         aws cloudformation deploy \
           --template-file cloudformation/cdn-dns.yml \
           --stack-name salsaTracker-cdndnsStack \
-          --capabilities CAPABILITY_NAMED_IAM
+          --capabilities CAPABILITY_NAMED_IAM \
+          --parameter-overrides AcmCertificateArn=${{ secrets.ACM_CERTIFICATE_ARN }}
