@@ -5,7 +5,7 @@ Resources:
     Type: AWS::CloudFront::OriginAccessControl
     Properties:
       OriginAccessControlConfig:
-        Name: "CloudFrontOAC"
+        Name: "salsaTracker-CloudFrontOAC"
         Description: "OAC for S3 bucket access"
         OriginAccessControlOriginType: "s3"
         SigningBehavior: "always"
