@@ -20,3 +20,13 @@ Outputs:
     Value: !Ref SalsaS3Bucket
     Export:
       Name: SalsaS3BucketName
+  SalsaS3DomainName:
+    Description: The Domain Name of the S3 bucket
+    Value: !GetAtt SalsaS3Bucket.DomainName
+    Export:
+      Name: SalsaS3DomainName 
+  SalsaS3Arn:
+    Description: The ARN of the S3 bucket
+    Value: !GetAtt SalsaS3Bucket.Arn
+    Export:
+      Name: SalsaS3Arn
