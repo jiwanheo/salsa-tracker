@@ -1,79 +1,122 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import MoveCards from "./components/MoveCards/MoveCards";
+import CategoryScrollButtons from "./components/CategoryScrollButtons/CategoryScrollButtons";
 
-const categories = {
-  "right-left": "Right Hand & Left Hand",
-  "right-right": "Right Hand & Right Hand"
-};
+export default function UserSelector() {
+  const [selectedUser, setSelectedUser] = useState("");
+  const [selectedCategoryType, setselectedCategoryType] = useState("Hands");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-const App = () => {
-  const [moves, setMoves] = useState({});
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-
-  useEffect(() => {
-    fetch("/moves.json")
-      .then((res) => res.json())
-      .then((data) => setMoves(data.categories));
-  }, []);
-
-  // Update rating
-  const updateRating = (category, moveIndex, rating) => {
-    setMoves((prevMoves) => {
-      const updatedMoves = { ...prevMoves };
-      updatedMoves[category] = [...updatedMoves[category]]; // Create a copy of the array
-      updatedMoves[category][moveIndex] = {
-        ...updatedMoves[category][moveIndex], // Copy the move object
-        rating: rating, // Update the rating
-      };
-      return updatedMoves;
-    });
+  const handsCategories = {
+    "L - R": "Lead's left hand, follow's right hand",
+    "L - L": "Lead's left hand, follow's left hand",
+    "R - R": "Lead's right hand, follow's right hand",
+    "R - L": "Lead's right hand, follow's left hand",
+    "LR = RL": "Both hands (regular)",
+    "LL X RR": "Hands crossed (lead's left on top)",
+    "RR X LL": "Hands crossed (lead's right on top)"
   };
 
+  const positionsCategories = {
+    "crossbody": "Cross body lead",
+    "hammerlock": "Hammerlock"
+  };
+
+  const moveData = {
+    "L - L": [
+      {
+        name: "Double Left Hand Spin",
+        description: "A spin where both partners keep left-hand connection, leading into a smooth turn.",
+        gif: "https://placehold.co/200x150.gif",
+        comfortLevel: 4,
+        comments: ["Feels smooth when led properly", "Make sure to prep early"]
+      },
+      {
+        name: "Left-Hand Wrap",
+        description: "The lead wraps the follow’s left hand behind their back, setting up for an exit turn.",
+        gif: "https://placehold.co/200x150.gif",
+        comfortLevel: 3,
+        comments: ["Careful not to over-rotate", "Keep frame tight"]
+      }
+    ],
+    "R - R": [
+      {
+        name: "Right Hand Check Turn",
+        description: "A controlled check turn with the right hand, leading into a cross-body exit.",
+        gif: "https://placehold.co/200x150.gif",
+        comfortLevel: 5,
+        comments: ["Feels very natural", "Great for transitions"]
+      },
+      {
+        name: "Right Hand Loop",
+        description: "A looping motion over the follow’s head, transitioning into a hammerlock.",
+        gif: "https://placehold.co/200x150.gif",
+        comfortLevel: 2,
+        comments: ["Takes practice to smooth out", "Don’t rush the loop"]
+      }
+    ]
+  };
+
+  // Choose the categories to display based on the selected option
+  const categories = selectedCategoryType === "Hands" ? handsCategories : positionsCategories;
+  
+  const moves = selectedCategory ? moveData[selectedCategory] || [] : [];
+
+  const updateMoveRating = (index, newRating) => {
+    console.log(`Updating move ${index} to ${newRating}`);
+    // Future: API call to update DB
+  };
+  
+
   return (
-    <div className="container py-4">
-      <h1 className="text-center mb-4">Jiwan&apos;s Awesome Salsa Tracker</h1>
-
-      {/* Category Buttons */}
-      <div className="d-flex gap-2 justify-content-center mb-4 overflow-auto">
-        {Object.entries(categories).map(([key, label]) => (
-          <button
-            key={key}
-            className={`btn ${selectedCategory === key ? "btn-primary" : "btn-outline-secondary"}`}
-            onClick={() => setSelectedCategory(key)}
-          >
-            {label}
-          </button>
-        ))}
+    <div className="d-flex flex-column align-items-center">
+      <select
+        value={selectedUser}
+        onChange={(e) => setSelectedUser(e.target.value)}
+        className="form-select"
+        style={{ maxWidth: "300px" }}
+      >
+        <option value="">Select a user</option>
+        <option value="Jiwan">Jiwan</option>
+        <option value="G-Money">G-Money</option>
+      </select>
+      
+      <div className="mt-3 d-flex gap-2">
+        <button
+          className={`btn ${selectedCategoryType === "Hands" ? "btn-primary" : "btn-outline-primary"}`}
+          onClick={() => {
+            setselectedCategoryType("Hands");
+            setSelectedCategory(null); // Reset selection when switching options
+          }}
+        >
+          Hands
+        </button>
+        <button
+          className={`btn ${selectedCategoryType === "Positions" ? "btn-primary" : "btn-outline-primary"}`}
+          onClick={() => {
+            setselectedCategoryType("Positions");
+            setSelectedCategory(null); // Reset selection when switching options
+          }}
+        >
+          Positions
+        </button>
       </div>
 
-      {/* Moves Grid */}
-      <div className="row g-3">
-        {moves[selectedCategory]?.map((move, index) => (
-          <div key={index} className="col-sm-6 col-md-4">
-            <div className="card shadow-sm">
-              <div className="card-body">
-                <h5 className="card-title">{move.name}</h5>
-                <video className="w-100 rounded mt-2" controls>
-                  <source src={move.video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                <div className="mt-3 d-flex gap-2">
-                  {["good", "ok", "bad"].map((rating) => (
-                    <button
-                      key={rating}
-                      className={`btn ${move.rating === rating ? "btn-success" : "btn-outline-secondary"}`}
-                      onClick={() => updateRating(selectedCategory, index, rating)}
-                    >
-                      {rating}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Scrollable Category Buttons */}
+      <CategoryScrollButtons
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        selectedCategoryType={selectedCategoryType}
+      />
+
+      {/* Display Full Name of Selected Category */}
+      {selectedCategory && (
+        <h4 className="mt-3">{categories[selectedCategory]}</h4>
+      )}
+
+      {/* Move Cards */}
+      <MoveCards moves={moves} updateMoveRating={updateMoveRating} />
     </div>
   );
-};
-
-export default App;
+}
