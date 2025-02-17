@@ -1,18 +1,32 @@
 import CategoryScrollButton from './CategoryScrollButton';
 import PropTypes from 'prop-types';
 
-// Colouring Hands category
 const getColoredText = (key) => {
-  return key.split(/(\s*[=X-]\s*)/).map((part, index) => {
-      if (part === "L" || part === "LR" || part === "LL") {
-      return <span key={index} className="blue">{part}</span>;
-      } 
-      if (part === "R" || part === "RL" || part === "RR") {
-      return <span key={index} className="red">{part}</span>;
-      } 
-      return <span key={index}>{part}</span>;
-  });
+  const split_key = (key.split(/(\s*[-X=]\s*)/))
+  
+  // If first part is length 1, there's only 1 hand
+  if (split_key[0].length == 1) {
+    return(
+      <>
+        <span className="blue">{split_key[0]}</span>
+        <span className="separator">{split_key[1]}</span>
+        <span className="red">{split_key[2]}</span>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <span className="blue">{split_key[0][0]}</span>
+        <span className="red">{split_key[0][1]}</span>
+        <span className="separator">{split_key[1]}</span>
+        <span className="blue">{split_key[2][0]}</span>
+        <span className="red">{split_key[2][1]}</span>
+      </>
+    );
+  }
 };
+
+
 
 const CategoryScrollButtons = ({ categories, selectedCategory, setSelectedCategory, selectedCategoryType }) => {
   return (
