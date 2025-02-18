@@ -1,3 +1,9 @@
+# Motivation
+
+Learning Salsa is really fun, because there are so many moves and variations. When I go to socials, I try to use what I learned in class. But a lot of the times, I find myself forgetting to use the move I recently learned, or using the same move over and over again. Wouldn't it be nice if I remembered there are more exits out of a cross-hand position, other than the sombrero CBL? (of course, leads left hand on top of the right!)
+
+Wait no further! With Jiwan's awesome salsa tracker (JAST), you can record all the moves you learn, to build a personalized database of **your** salsa moves. Just learned the New York walk in class? Make an entry to JAST using the video you took at the end of class! And the next time you go to a social, you'll know that you have a new move to work on, from the CBL position when your left hand is connected with your follow's right hand.
+
 # Philosophy
 
 We're going to track all moves' progress, by looking at them by hands (i.e. lead left hand - follow right hand, ...) or position (i.e. CBL, hammerlock, ...). A move must have at least one category. 

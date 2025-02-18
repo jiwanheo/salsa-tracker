@@ -10,3 +10,21 @@ First draft of the project. Experimented with AWS hosting and NoSQL DB, but deci
 ### Changed
  
 ### Fixed
+
+## 2025-02-17 - [Unreleased]
+
+Got the basic UI funcionality done. Very rough, but a good starting point. Developing mobile-portrait first. Using bootstrap 5. Need to decide on colours/fonts, unify the spacing, ..., very soon.
+ 
+### Added
+
+- Login page
+- Main page
+    - Category type
+    - Horizontal scrolling categories
+    - Moves cards
+- Settings page
+- Routes
+
+### Changed
+ 
+### Fixed
