@@ -18,18 +18,25 @@ A category will be selected first, then all moves that users know under that cat
 
 # Backend Setup
 
-Two home servers, both raspberry pis. Would need to consider opening up the network (security + dynamic DNS, like duckDNS)
+1 home server, running things in container. Would need to consider opening up the network (security + dynamic DNS, like duckDNS)
 
-## Server 1
+## Storage
 - Nextcloud server that hosts videos
 - Backup to AWS regularly (but don't serve from there)
 
-## Server 2
+## Other services
 - Moves DB 
 - Static UI
 - API
 - Reverse proxy
 - Monitoring
+
+## Hardware Spec
+
+Lenovo M720q
+- i5-8500T
+- 16GB RAM
+- 239 GB NVMe SSD samsung mzvlb256hahq-000l7
 
 # DB Schema
 
