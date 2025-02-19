@@ -28,3 +28,15 @@ Got the basic UI funcionality done. Very rough, but a good starting point. Devel
 ### Changed
  
 ### Fixed
+
+## 2025-02-18 - [Unreleased]
+
+Got the new laptop and the mini server BOIIIII
+
+I got a used T14 Gen 1 AMD for everyday use, and the ThinkCentre M720q that I'm going to set up as my home server, and use it for this project. Super excited about this. I'm running dual boot Ubuntu/Windows on my laptop, but will probably run the server as entirely Linux.~ 
+ 
+### Added
+
+### Changed
+ 
+### Fixed
