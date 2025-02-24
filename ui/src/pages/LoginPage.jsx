@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { TextInput, TextInputContainer } from "../components/TextInput/TextInput";
 import Button from "../components/Button/Button";
 
@@ -15,6 +15,10 @@ export default function LoginPage() {
     } else {
       alert("Please select a user.");
     }
+  };
+  
+  const handleSignup = () => {
+    navigate("/signup");
   };
 
   return (
@@ -34,9 +38,11 @@ export default function LoginPage() {
           placeholder=""
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          forgotPassword="true"
         />
       </TextInputContainer>
       <Button label="Sign in" onClick={() => alert(text)} widthClass="w-50" />
+      <Link to="/signup" className="jast-a">Sign up</Link>
     </div>
   );
 }
