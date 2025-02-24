@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { TextInput, TextInputContainer } from "../components/TextInput/TextInput";
+import Button from "../components/Button/Button";
 
 export default function LoginPage() {
-  const [selectedUser, setSelectedUser] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -16,20 +19,24 @@ export default function LoginPage() {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      <h2>Login</h2>
-      <select
-        value={selectedUser}
-        onChange={(e) => setSelectedUser(e.target.value)}
-        className="form-select"
-        style={{ maxWidth: "300px" }}
-      >
-        <option value="">Select a user</option>
-        <option value="Jiwan">Jiwan</option>
-        <option value="G-Money">G-Money</option>
-      </select>
-      <button className="btn btn-primary mt-3" onClick={handleLogin}>
-        Login
-      </button>
+      <h2 className="mb-3">Sign in to JAST</h2>
+      <TextInputContainer>
+        <TextInput
+          label="Username"
+          name="username"
+          placeholder=""
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextInput
+          label="Password"
+          name="password"
+          placeholder=""
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </TextInputContainer>
+      <Button label="Sign in" onClick={() => alert(text)} widthClass="w-50" />
     </div>
   );
 }

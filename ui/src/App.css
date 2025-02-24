@@ -1,3 +1,12 @@
+:root {
+  --bs-border-radius: 0.5rem; /* Change border width globally */
+}
+
+.btn-primary {
+  --bs-btn-bg: #000000;
+  --bs-btn-border-color: #000000;
+  /* Need to do other states! */
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;

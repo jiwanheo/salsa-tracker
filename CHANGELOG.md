@@ -40,3 +40,15 @@ I got a used T14 Gen 1 AMD for everyday use, and the ThinkCentre M720q that I'm 
 ### Changed
  
 ### Fixed
+
+## 2025-02-23 - [Unreleased]
+
+Did a few more rounds of figma, starting to make components with the theme
+ 
+### Added
+
+- Log in page
+
+### Changed
+ 
+### Fixed

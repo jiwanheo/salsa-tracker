@@ -1,0 +1,8 @@
+.jast-textinput-container {
+    width: 80%;
+}
+
+.jast-textinput label {
+    font-size: 0.8em;
+    font-weight: bold;
+}
