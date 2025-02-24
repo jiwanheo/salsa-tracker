@@ -1,12 +1,18 @@
 /* Overwrite bootstrap */
 :root {
-  --bs-border-radius: 0.5rem; /* Change border width globally */
+  --bs-border-radius: 12px; /* Change border width globally */
 }
 
 .btn-primary {
   --bs-btn-bg: #000000;
   --bs-btn-border-color: #000000;
+  height: 56px;
   /* Need to do other states! */
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
 }
 
 a {
@@ -14,14 +20,17 @@ a {
 }
 
 .jast-a {
-  font-size: 0.8em;
+  font-size: 15px;
 }
 
+.form-control {
+  padding: 18px 20px;
+}
 
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
   text-align: center;
 }
 

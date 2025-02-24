@@ -42,7 +42,7 @@ export default function LoginPage() {
         />
       </TextInputContainer>
       <Button label="Sign in" onClick={() => alert(text)} widthClass="w-50" />
-      <Link to="/signup" className="jast-a">Sign up</Link>
+      <Link to="/signup" className="jast-a mt-3">Sign up</Link>
     </div>
   );
 }

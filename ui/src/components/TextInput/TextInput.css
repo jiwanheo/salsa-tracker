@@ -1,8 +1,13 @@
 .jast-textinput-container {
-    width: 80%;
+    width: 100%;
 }
 
 .jast-textinput label {
-    font-size: 0.8em;
+    font-size: 15px;
     font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.jast-textinput input {
+    height: 56px;
 }
