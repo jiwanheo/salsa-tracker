@@ -52,5 +52,6 @@ Did a few more rounds of figma, starting to make components with the theme
 ### Changed
  
 - Log in page with a little more theme
+    - Form/Button various states are not done yet (border on focus, button active, ...)
 
 ### Fixed
