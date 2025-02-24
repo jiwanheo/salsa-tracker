@@ -47,8 +47,10 @@ Did a few more rounds of figma, starting to make components with the theme
  
 ### Added
 
-- Log in page
+- jast textinput, button
 
 ### Changed
  
+- Log in page with a little more theme
+
 ### Fixed
