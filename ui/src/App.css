@@ -1,16 +1,18 @@
 /* Overwrite bootstrap */
 :root {
   --bs-border-radius: 12px; /* Change border width globally */
+  --black: #000000;
   --light-grey: #F0F0F0;
+  --med-grey: #cccccc;
 }
 
 body {
-  background-color: var(--light-grey);
+  background-color: var(--light-grey)
 }
 
 .btn-primary {
-  --bs-btn-bg: #000000;
-  --bs-btn-border-color: #000000;
+  --bs-btn-bg: var(--black);
+  --bs-btn-border-color: var(--black);
   height: 56px;
   /* Need to do other states! */
 }
@@ -22,6 +24,10 @@ h2 {
 
 a {
   --bs-link-color-rgb: 0, 0, 0
+}
+
+.top-nav {
+  width: 100%;
 }
 
 .jast-a {

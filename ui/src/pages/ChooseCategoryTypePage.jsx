@@ -1,10 +1,17 @@
 import Card from "../components/Cards/Card";
 import CardsContainer from "../components/Cards/CardsContainer";
+import ProgressBar from "../components/ProgressBar/ProgressBar";
+import BackButton from "../components/BackButton/BackButton";
 
 export default function ChooseCategoryTypePage() {
     return (
         <div className="d-flex flex-column align-items-center">
-            <h2 className="mb-3">View moves by:</h2>
+            <div className="top-nav mb-5">
+                <ProgressBar progress={1}/>
+                <BackButton text={"Login"} to={"/"}/>
+            </div>
+
+            <h1 className="mb-5">View moves by:</h1>
 
             <CardsContainer 
                 cards={

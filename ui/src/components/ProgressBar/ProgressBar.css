@@ -1,0 +1,24 @@
+/* Container for the progress bar */
+.progress-bar-container {
+    display: flex;
+    width: 100%;               
+    gap: 8px;                 
+  }
+  
+  /* Base style for each bar */
+  .progress-bar-strip {
+    flex: 1;                   /* Each strip should take equal width */
+    height: 10px;              /* Height of the bar */
+    border-radius: var(--bs-border-radius);        /* Rounded corners */
+  }
+  
+  /* When the bar represents progress (colored state) */
+  .progress-bar-strip.progress {
+    background-color: var(--black); 
+  }
+  
+  /* When the bar is not yet filled (non-progress state) */
+  .progress-bar-strip.non-progress {
+    background-color: var(--med-grey);    
+  }
+  

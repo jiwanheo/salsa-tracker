@@ -18,7 +18,7 @@ export default function LoginPage() {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      <h2 className="mb-3">Sign in to JAST</h2>
+      <h1 className="mb-5">Sign in to JAST</h1>
       <TextInputContainer>
         <TextInput
           label="Username"

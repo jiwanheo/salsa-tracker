@@ -1,0 +1,11 @@
+/* Styling for the back link */
+.back-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* Remove underline */
+    font-size: 15px;
+}
+
+.back-icon {
+    margin-right: 8px; /* Adds space between the icon and the text */
+}
