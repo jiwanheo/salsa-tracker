@@ -9,12 +9,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (selectedUser) {
-      // Redirect to the main page upon successful login
-      navigate("/main");
-    } else {
-      alert("Please select a user.");
-    }
+    navigate("/main");
   };
   
   const handleSignup = () => {
@@ -41,7 +36,7 @@ export default function LoginPage() {
           forgotPassword="true"
         />
       </TextInputContainer>
-      <Button label="Sign in" onClick={() => alert(text)} widthClass="w-50" />
+      <Button label="Sign in" onClick={handleLogin} />
       <Link to="/signup" className="jast-a mt-3">Sign up</Link>
     </div>
   );

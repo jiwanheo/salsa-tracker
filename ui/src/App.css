@@ -1,6 +1,11 @@
 /* Overwrite bootstrap */
 :root {
   --bs-border-radius: 12px; /* Change border width globally */
+  --light-grey: #F0F0F0;
+}
+
+body {
+  background-color: var(--light-grey);
 }
 
 .btn-primary {
