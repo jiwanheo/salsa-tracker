@@ -2,8 +2,15 @@ import Card from "../components/Cards/Card";
 import CardsContainer from "../components/Cards/CardsContainer";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BackButton from "../components/BackButton/BackButton";
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function ChooseCategoryTypePage() {
+    const navigate = useNavigate();
+
+    const handleClickType = (type) => {
+      navigate(`/category?type=${type}`);
+    };
+
     return (
         <div className="d-flex flex-column align-items-center">
             <div className="top-nav mb-5">
@@ -24,6 +31,7 @@ export default function ChooseCategoryTypePage() {
                                     <p>7 hand positions</p>
                                 </div>
                             } 
+                            onClick={() => handleClickType('hands')}
                         ></Card>
 
                         <Card
@@ -34,6 +42,7 @@ export default function ChooseCategoryTypePage() {
                                     <p className="text-gray-600">Base positions</p>
                                 </div>
                             } 
+                            onClick={() => handleClickType('positions')}
                         ></Card>
                     </>   
                 }> 

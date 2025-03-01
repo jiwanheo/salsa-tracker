@@ -1,6 +1,6 @@
-import "./Card.css"
+import "./MoveCard.css"
 
-const Card = ({ image, textSection, onClick }) => {
+const MoveCard = ({ image, textSection, onClick }) => {
     return (
         <div className={`card jast-card shadow-sm`} onClick={onClick}>
             {image && (
@@ -15,4 +15,4 @@ const Card = ({ image, textSection, onClick }) => {
     );
 };
 
-export default Card;
+export default MoveCard;

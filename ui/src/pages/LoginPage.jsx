@@ -9,7 +9,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate("/main");
+    navigate("/category-type");
   };
   
   const handleSignup = () => {
