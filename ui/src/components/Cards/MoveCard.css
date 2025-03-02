@@ -14,3 +14,28 @@
 .move-description {
     font-size: 15px;
 }
+
+.collapse-content {
+    display: grid;
+    grid-template-rows: 0fr; /* Fully collapsed */
+    transition: grid-template-rows 0.4s ease-in-out;
+}
+
+.collapse-content.show {
+    grid-template-rows: 1fr; /* Expands naturally to fit content */
+}
+
+.collapse-content-body {
+    overflow: hidden;
+}
+.change-rating-option i {
+    font-size: 24px;
+}
+
+.chevron {
+    transition: transform 0.3s ease-in-out;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}

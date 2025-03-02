@@ -10,46 +10,36 @@ const MoveCard = ({ moveName, moveDescription, rating: initialRating, video }) =
     };
 
     return (
-        <div className="card jast-card jast-move-card shadow-sm">
+        <div className="card jast-card jast-move-card shadow-sm" onClick={toggleCard}>
             <div className="card-body w-100">
                 <div className="jast-move-card-header w-100 mb-3">
-                    <div className="">
-                        <h3 className="text-start mb-0">{moveName}</h3>
-                    </div>
-                    <div className="">
-                        <RatingBadge rating={rating} /> 
-                    </div>
+                    <h3 className="text-start mb-0">{moveName}</h3>
+                    <RatingBadge rating={rating} selectedRating={rating}/> 
                 </div>
                     
-                <div className="mb-3">
+                <div className="mb-4">
                     <p className="move-description text-start">{moveDescription}</p>
                 </div>
                 
-                <div className={`collapse ${isOpen ? 'show' : ''}`}>
-                    <div className="mb-3">
-                        <img src={video} alt="Preview" className="img-fluid" />
-                    </div>
-                    <div className="change-rating">
-                        <h6>Change Rating</h6>
-                        <div>
-                            <button className="btn btn-success me-2" onClick={() => setRating("good")}>
-                                Good
-                            </button>
-                            <button className="btn btn-warning me-2" onClick={() => setRating("ok")}>
-                                OK
-                            </button>
-                            <button className="btn btn-danger" onClick={() => setRating("bad")}>
-                                Bad
-                            </button>
+                <div className={`collapse-content ${isOpen ? 'show' : ''}`}>
+                    <div className="collapse-content-body">
+                        <div className="mb-4">
+                            <img src={video} alt="Preview" className="img-fluid" />
                         </div>
+                        <div className="change-rating d-flex flex-column align-items-center mb-4">
+                            <h6>Change Rating</h6>
+                            <div className="d-flex w-100 justify-content-center align-items-center gap-4" >
+                                <RatingBadge rating="good" selectedRating={rating} onClick={() => setRating("good")}/>
+                                <RatingBadge rating="ok" selectedRating={rating} onClick={() => setRating("ok")}/>
+                                <RatingBadge rating="bad" selectedRating={rating} onClick={() => setRating("bad")}/>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
 
                 <div>
-                    <button className="btn pb-0 d-flex" onClick={toggleCard}>
-                        <i class="fa-solid fa-angle-down"></i>
-                    </button>
+                    <i class={`fa-solid fa-angle-down chevron ${isOpen ? "rotate" : ""}`}></i>
                 </div>
 
             </div>

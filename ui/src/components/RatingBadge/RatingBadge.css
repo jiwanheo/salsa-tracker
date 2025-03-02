@@ -17,6 +17,10 @@
     --dark-red: #f71d1d;
 }
 
+.rating-badge-container {
+    width: 75px;
+}
+
 .rating-badge i {
     font-size: 24px;
 }
@@ -43,4 +47,13 @@
 }
 .rating-badge-bad i {
     color: var(--dark-red);
+}
+
+.greyed-out-rating-badge {
+    background-color: var(--light-grey);
+    border: 2px solid var(--dark-grey);
+}
+
+.greyed-out-rating-badge i {
+    color: var(--dark-grey);
 }

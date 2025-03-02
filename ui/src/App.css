@@ -3,7 +3,9 @@
   --bs-border-radius: 12px; /* Change border width globally */
   --black: #000000;
   --light-grey: #F0F0F0;
+  --light-grey2: #e0e0e0;
   --med-grey: #cccccc;
+  --dark-grey: #999999;
 }
 
 body {
