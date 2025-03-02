@@ -55,3 +55,36 @@ Did a few more rounds of figma, starting to make components with the theme
     - Form/Button various states are not done yet (border on focus, button active, ...)
 
 ### Fixed
+
+## 2025-03-02 - [Unreleased]
+
+Implemented most pages
+ 
+### Added
+
+Pages:
+- Choose category type
+- Choose category
+- Choose move
+
+Components:
+- BackButton
+- Card
+- MoveCard
+- ProgressBar
+- RatingBade
+
+### Changed
+ 
+
+### Fixed
+
+## Todo
+
+### Collapsible Card
+- Click isolation (Clicking change rating/video shouldn't collapse the card)
+- Text truncation on card's collapsed state 
+- Video
+
+### Admin page / DB
+- Hook it up to a DB
