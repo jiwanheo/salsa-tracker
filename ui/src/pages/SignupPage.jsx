@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TextInput, TextInputContainer } from "../components/TextInput/TextInput";
 import Button from "../components/Button/Button";
+import BackButton from "../components/BackButton/BackButton";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
@@ -9,7 +10,13 @@ export default function LoginPage() {
 
     return (
         <div className="d-flex flex-column align-items-center">
-          <h2 className="mb-3">Sign up to JAST</h2>
+        
+          <div className="top-nav mb-5">
+              <BackButton text={"Sign in"} to={"/"}/>
+          </div>
+
+          <h1 className="mb-3">Sign up to JAST</h1>
+
           <TextInputContainer>
             <TextInput
               label="Username"
@@ -18,7 +25,7 @@ export default function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <TextInput
+            {/* <TextInput
               label="Password"
               name="password"
               placeholder=""
@@ -31,7 +38,7 @@ export default function LoginPage() {
               placeholder=""
               value={repassword}
               onChange={(e) => setRepassword(e.target.value)}
-            />
+            /> */}
           </TextInputContainer>
           <Button label="Sign up" onClick={() => alert(text)} widthClass="w-50" />
         </div>

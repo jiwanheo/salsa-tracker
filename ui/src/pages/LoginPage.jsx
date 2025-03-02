@@ -27,14 +27,14 @@ export default function LoginPage() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <TextInput
+        {/* <TextInput
           label="Password"
           name="password"
           placeholder=""
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           forgotPassword="true"
-        />
+        /> */}
       </TextInputContainer>
       <Button label="Sign in" onClick={handleLogin} />
       <Link to="/signup" className="jast-a mt-3">Sign up</Link>

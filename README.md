@@ -65,3 +65,11 @@ Lenovo M720q
 | move_id         | INTEGER    | Foreign key referencing Moves table     |
 | progress        | VARCHAR    | Progress (e.g., "Learning", "Mastered") |
 | comment         | VARCHAR    | Any comments                            |
+
+## **Users Table**
+| Column          | Data Type  | Description                             |
+|-----------------|------------|-----------------------------------------|
+| user_id         | VARCHAR    | Unique ID for the user                  |
+| user_name       | VARCHAR    | User name to login                      |
+
+Maybe we'll do passwords and stuff later
