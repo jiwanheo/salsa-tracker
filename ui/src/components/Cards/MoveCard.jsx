@@ -1,8 +1,9 @@
 import "./MoveCard.css"
 import React, { useState } from 'react';
+import RatingBadge from "../RatingBadge/RatingBadge"; // Import the badge component
 
-const MoveCard = ({ moveName, moveDescription, rating, anotherText, video }) => {
-
+const MoveCard = ({ moveName, moveDescription, rating: initialRating, video }) => {
+    const [rating, setRating] = useState(initialRating); // State to track rating
     const [isOpen, setIsOpen] = useState(false);
     const toggleCard = () => {
         setIsOpen(!isOpen);
@@ -15,8 +16,8 @@ const MoveCard = ({ moveName, moveDescription, rating, anotherText, video }) => 
                     <div className="">
                         <h3 className="text-start mb-0">{moveName}</h3>
                     </div>
-                    <div className="rating-badge">
-                        <p>{rating}</p>
+                    <div className="">
+                        <RatingBadge rating={rating} /> 
                     </div>
                 </div>
                     
@@ -31,7 +32,15 @@ const MoveCard = ({ moveName, moveDescription, rating, anotherText, video }) => 
                     <div className="change-rating">
                         <h6>Change Rating</h6>
                         <div>
-                            Good OK Bad
+                            <button className="btn btn-success me-2" onClick={() => setRating("good")}>
+                                Good
+                            </button>
+                            <button className="btn btn-warning me-2" onClick={() => setRating("ok")}>
+                                OK
+                            </button>
+                            <button className="btn btn-danger" onClick={() => setRating("bad")}>
+                                Bad
+                            </button>
                         </div>
 
                     </div>

@@ -24,15 +24,19 @@ export default function ChooseMovePage() {
         {
             moveName: "Left turn (follow)", 
             moveDescription: "The Lead initiates by raising their left hand slightly and guiding the Follow into a counterclockwise turn under the arm.",
-            rating: "Good",
-            anotherText: "hihihihi",
+            rating: "good",
             video: "https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630",
         },
         {
             moveName: "Reverse Crossbody Lead with Inside Turn", 
             moveDescription: "The Lead initiates an inside turn (left turn) for the Follow, then guides them into a Crossbody Lead while maintaining connection. As the Follow crosses, the Lead preps and leads a second inside turn",
-            rating: "OK",
-            anotherText: "hihihihi",
+            rating: "ok",
+            video: "https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630",
+        },
+        {
+            moveName: "Reverse Crossbody Lead with Inside Turn", 
+            moveDescription: "The Lead initiates an inside turn (left turn) for the Follow, then guides them into a Crossbody Lead while maintaining connection. As the Follow crosses, the Lead preps and leads a second inside turn",
+            rating: "bad",
             video: "https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630",
         },
     ];

@@ -1,0 +1,46 @@
+.rating-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 15px;
+    border-radius: 18px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    --light-green: #DAF6AD;
+    --light-orange: #ffe8d1;
+    --light-red: #fcdede;
+
+    --dark-green: #028a00;
+    --dark-orange: #eb8d00;
+    --dark-red: #f71d1d;
+}
+
+.rating-badge i {
+    font-size: 24px;
+}
+
+.rating-badge-good {
+    background-color: var(--light-green);
+    border: 2px solid var(--dark-green);
+}
+.rating-badge-good i {
+    color: var(--dark-green);
+}
+
+.rating-badge-ok {
+    background-color: var(--light-orange);
+    border: 2px solid var(--dark-orange);
+}
+.rating-badge-ok i {
+    color: var(--dark-orange);
+}
+
+.rating-badge-bad {
+    background-color: var(--light-red);
+    border: 2px solid var(--dark-red);
+}
+.rating-badge-bad i {
+    color: var(--dark-red);
+}
