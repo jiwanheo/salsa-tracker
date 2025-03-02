@@ -11,35 +11,46 @@ export default function ChooseCategoryPage() {
     const queryParams = new URLSearchParams(location.search);
     const categoryType = queryParams.get('type');
 
+    const handleClickCategory = (category) => {
+        navigate(`/move?type=${categoryType}&category=${category}`);
+    };
+
     // Need a function to break up the text
     const handsData = [
         {
             image: "https://qotoqot.com/sad-animations/img/100/sitting_alone/sitting_alone.png",
             textSection: <p>Lead's left &lt;-&gt; follow's right</p>,
+            selectVal: "lead-left-follow-right",
         },
         {
             image: "https://qotoqot.com/sad-animations/img/100/sigh/sigh.png", 
             textSection: <p>Lead's left &lt;-&gt; follow's left</p>,
+            selectVal: "lead-left-follow-left",
         },
         {
             image: "https://qotoqot.com/sad-animations/img/100/holding_back_tears/holding_back_tears.png", 
             textSection: <p>Lead's right &lt;-&gt; follow's left</p>,
+            selectVal: "lead-right-follow-left",
         },
         {
             image: "https://qotoqot.com/sad-animations/img/100/sobbing/sobbing.png", 
             textSection: <p>Lead's right &lt;-&gt; follow's right</p>,
+            selectVal: "lead-right-follow-right",
         },
         {
             image: "https://qotoqot.com/sad-animations/img/100/crying_in_hands/crying_in_hands.png", 
             textSection: <p>Both hands straight</p>,
+            selectVal: "both-hands-straight",
         },
         {
             image: "https://qotoqot.com/sad-animations/img/100/emotional_eating/emotional_eating.png", 
             textSection: <p>Crossed hands (lead's right on top)</p>,
+            selectVal: "crossed-hands-lead-right-top",
         },
         {
             image: "https://qotoqot.com/sad-animations/img/100/angry/angry.png", 
             textSection: <p>Crossed hands (lead's left on top)</p>,
+            selectVal: "crossed-hands-lead-left-top",
         },
         
     ];
@@ -73,7 +84,12 @@ export default function ChooseCategoryPage() {
                 cards={
                     <>
                         {cardData.map((data, index) => (
-                            <Card key={index} image={data.image} textSection={data.textSection} />
+                            <Card 
+                                key={index} 
+                                image={data.image} 
+                                textSection={data.textSection} 
+                                onClick={() => handleClickCategory(data.selectVal)}
+                            />
                         ))}
                     </>   
                 }> 

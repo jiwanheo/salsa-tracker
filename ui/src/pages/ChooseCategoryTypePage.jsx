@@ -2,7 +2,7 @@ import Card from "../components/Cards/Card";
 import CardsContainer from "../components/Cards/CardsContainer";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BackButton from "../components/BackButton/BackButton";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChooseCategoryTypePage() {
     const navigate = useNavigate();

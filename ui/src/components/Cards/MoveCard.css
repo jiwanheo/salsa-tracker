@@ -1,0 +1,16 @@
+.jast-move-card {
+    height: 100%;
+}
+
+.jast-move-card .card-body {
+    flex-direction: column;
+}
+.jast-move-card-header {
+    display: grid;
+    grid-template-columns:  1fr 75px;
+    gap: 1em;
+    align-items: center;
+}
+.move-description {
+    font-size: 15px;
+}

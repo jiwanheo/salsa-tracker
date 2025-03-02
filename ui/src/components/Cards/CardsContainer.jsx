@@ -2,7 +2,7 @@ import "./CardsContainer.css"
 
 const CardsContainer = ({ cards }) => {
     return (
-        <div className={`jast-card-container`}>
+        <div className={"jast-card-container"}>
             {cards}
         </div>
     );

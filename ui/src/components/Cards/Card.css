@@ -4,10 +4,13 @@
 }
 
 .jast-card {
+    padding: 20px;
+}
+
+.jast-normal-card {
     flex-direction: row;
     align-items: center;
     gap: 20px;
-    padding: 20px;
 }
 
 .jast-card h2, .jast-card p {
