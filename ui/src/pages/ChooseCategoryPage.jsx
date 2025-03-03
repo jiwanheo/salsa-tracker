@@ -73,6 +73,7 @@ export default function ChooseCategoryPage() {
             <div className="top-nav mb-5">
                 <ProgressBar progress={2}/>
                 <BackButton text={"Category type"} to={"/category-type"}/>
+                <BackButton text={"Settings Panel"} to={"/settings"}/>
             </div>
 
             <h1 className="mb-5">

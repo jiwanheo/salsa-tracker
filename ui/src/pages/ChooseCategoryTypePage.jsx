@@ -16,6 +16,7 @@ export default function ChooseCategoryTypePage() {
             <div className="top-nav mb-5">
                 <ProgressBar progress={1}/>
                 <BackButton text={"Login"} to={"/"}/>
+                <BackButton text={"Settings Panel"} to={"/settings"}/>
             </div>
 
             <h1 className="mb-5">View moves by:</h1>
