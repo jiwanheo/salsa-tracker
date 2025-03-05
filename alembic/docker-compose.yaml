@@ -8,7 +8,7 @@ services:
     env_file: 
       - .env
     volumes:
-    - .alembic.ini:/alembic/alembic.ini
+    - ./alembic.ini:/alembic/alembic.ini
     - ./migrations:/alembic/migrations
     networks:
       - jast_network
