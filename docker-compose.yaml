@@ -1,6 +1,8 @@
 networks:
   jast_network:
     driver: bridge
+    external: false
+    name: jast_network
 
 # volumes:
 #   jast_db_data:
@@ -29,18 +31,6 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
-    networks:
-      - jast_network
-
-  alembic:
-    build: alembic
-    depends_on:
-      - db
-    env_file: 
-      - alembic/.env
-    volumes:
-    - ./alembic/alembic.ini:/alembic/alembic.ini
-    - ./alembic/migrations:/alembic/migrations
     networks:
       - jast_network
 
