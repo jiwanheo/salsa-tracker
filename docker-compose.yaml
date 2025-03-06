@@ -48,3 +48,14 @@ services:
       sh -c "npm install && npm run dev"
     networks:
       - jast_network
+  
+  api:
+    build: api
+    container_name: jast_api
+    env_file:
+      - .env
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - jast_network
