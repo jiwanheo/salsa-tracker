@@ -5,8 +5,39 @@ import BackButton from "../components/BackButton/BackButton";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [repassword, setRepassword] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [repassword, setRepassword] = useState("");
+
+    const handleSignup = async (username) => {
+
+      const userData = {
+        name: username
+      };
+
+      try {
+        // Send the POST request
+        const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/create-user`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+          body: JSON.stringify(userData),
+        });
+  
+        // Check if the response is ok (status code 200-299)
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        // Parse the JSON response
+        const responseData = await response.json();
+        console.log(responseData)
+  
+      } catch (error) {
+        // Handle any errors
+        console.log(error.message);
+      }
+    };
 
     return (
 
@@ -42,7 +73,7 @@ export default function LoginPage() {
                 onChange={(e) => setRepassword(e.target.value)}
               /> */}
             </TextInputContainer>
-            <Button label="Sign up" onClick={() => alert(text)} widthClass="w-50" />
+            <Button label="Sign up" onClick={() => handleSignup(username)} />
           </div>
         </div>
       );

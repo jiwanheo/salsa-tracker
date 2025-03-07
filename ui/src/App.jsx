@@ -1,7 +1,7 @@
 // import AddEditPage from "./components/AddEditPage/AddEditPage";
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ReactDOM from 'react-dom';
+import { UserProvider } from './UserContext'; 
 import LoginPage from "./pages/LoginPage"; 
 import ChooseCategoryTypePage from "./pages/ChooseCategoryTypePage"; 
 import ChooseCategoryPage from "./pages/ChooseCategoryPage"; 
@@ -17,17 +17,19 @@ export default function App() {
   
   
   return (
-    <Router>
-      {userExists === false && <LoginError />}
+    <UserProvider>
+      <Router>
+        {userExists === false && <LoginError />}
 
-      <Routes>
-        <Route path="/" element={<LoginPage setUserExists={setUserExists}/>} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/category-type" element={<ChooseCategoryTypePage />} />
-        <Route path="/category" element={<ChooseCategoryPage />} />
-        <Route path="/move" element={<ChooseMovePage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-      </Routes>
-    </Router>
+        <Routes>
+          <Route path="/" element={<LoginPage setUserExists={setUserExists}/>} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/category-type" element={<ChooseCategoryTypePage />} />
+          <Route path="/category" element={<ChooseCategoryPage />} />
+          <Route path="/move" element={<ChooseMovePage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
