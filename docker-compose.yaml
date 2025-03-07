@@ -4,8 +4,8 @@ networks:
     external: false
     name: jast_network
 
-# volumes:
-#   jast_db_data:
+volumes:
+  jast_db_data:
 
 services:
   db:
@@ -16,9 +16,9 @@ services:
     restart: unless-stopped
     # set shared memory limit when using docker-compose
     shm_size: 128mb
-    # volumes:
+    volumes:
       # Eventually want to mount a data volume
-      # - jast_db_data:/var/lib/postgresql/data
+      - jast_db_data:/var/lib/postgresql/data
 
     ports:
       - "5432:5432"
