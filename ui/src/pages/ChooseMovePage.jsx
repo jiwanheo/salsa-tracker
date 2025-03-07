@@ -42,31 +42,34 @@ export default function ChooseMovePage() {
     ];
 
     return (
-        <div className="d-flex flex-column align-items-center">
-            <div className="top-nav mb-5">
-                <ProgressBar progress={3}/>
-                <BackButton text={ `${categoryType.charAt(0).toUpperCase()}${categoryType.slice(1)} category` } to={`/category?type=${categoryType}`}/>
-                <BackButton text={"Settings Panel"} to={"/settings"}/>
+
+        <div className="main-container">
+            <div className="d-flex flex-column align-items-center">
+                <div className="top-nav mb-5">
+                    <ProgressBar progress={3}/>
+                    <BackButton text={ `${categoryType.charAt(0).toUpperCase()}${categoryType.slice(1)} category` } to={`/category?type=${categoryType}`}/>
+                    <BackButton text={"Settings Panel"} to={"/settings"}/>
+                </div>
+
+                <h1 className="mb-5">{categoryInEnglish}</h1>
+
+                <CardsContainer 
+                    cards={
+                        <>
+                            {cardData.map((data, index) => (
+                                <MoveCard 
+                                    key={index}
+                                    moveName={data.moveName} 
+                                    moveDescription={data.moveDescription} 
+                                    rating={data.rating} 
+                                    anotherText={data.anotherText} 
+                                    video={data.video} 
+                                />
+                            ))}
+                        </>   
+                    }> 
+                </CardsContainer>
             </div>
-
-             <h1 className="mb-5">{categoryInEnglish}</h1>
-
-            <CardsContainer 
-                cards={
-                    <>
-                        {cardData.map((data, index) => (
-                            <MoveCard 
-                                key={index}
-                                moveName={data.moveName} 
-                                moveDescription={data.moveDescription} 
-                                rating={data.rating} 
-                                anotherText={data.anotherText} 
-                                video={data.video} 
-                            />
-                        ))}
-                    </>   
-                }> 
-            </CardsContainer>
         </div>
     )
 }

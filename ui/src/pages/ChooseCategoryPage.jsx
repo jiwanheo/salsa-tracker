@@ -69,32 +69,34 @@ export default function ChooseCategoryPage() {
     const cardData = categoryType === 'hands' ? handsData : positionsData;
 
     return (
-        <div className="d-flex flex-column align-items-center">
-            <div className="top-nav mb-5">
-                <ProgressBar progress={2}/>
-                <BackButton text={"Category type"} to={"/category-type"}/>
-                <BackButton text={"Settings Panel"} to={"/settings"}/>
+        <div className="main-container">
+            <div className="d-flex flex-column align-items-center">
+                <div className="top-nav mb-5">
+                    <ProgressBar progress={2}/>
+                    <BackButton text={"Category type"} to={"/category-type"}/>
+                    <BackButton text={"Settings Panel"} to={"/settings"}/>
+                </div>
+
+                <h1 className="mb-5">
+                    <span style={{ textTransform: 'capitalize' }}>{categoryType}</span>
+                    <span> category</span>
+                </h1>
+
+                <CardsContainer 
+                    cards={
+                        <>
+                            {cardData.map((data, index) => (
+                                <Card 
+                                    key={index} 
+                                    image={data.image} 
+                                    textSection={data.textSection} 
+                                    onClick={() => handleClickCategory(data.selectVal)}
+                                />
+                            ))}
+                        </>   
+                    }> 
+                </CardsContainer>
             </div>
-
-            <h1 className="mb-5">
-                <span style={{ textTransform: 'capitalize' }}>{categoryType}</span>
-                <span> category</span>
-            </h1>
-
-            <CardsContainer 
-                cards={
-                    <>
-                        {cardData.map((data, index) => (
-                            <Card 
-                                key={index} 
-                                image={data.image} 
-                                textSection={data.textSection} 
-                                onClick={() => handleClickCategory(data.selectVal)}
-                            />
-                        ))}
-                    </>   
-                }> 
-            </CardsContainer>
         </div>
     )
 }
