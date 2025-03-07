@@ -1,7 +1,7 @@
 import logging
 import os
 from typing import List, Optional
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import create_engine, MetaData, Table, select, insert
@@ -18,8 +18,8 @@ users_table = Table("users", metadata, autoload_with=engine)
 app = FastAPI()
 
 origins = [
-    # "http://localhost:5173",
-    "*",
+    "http://localhost:5173",
+    # "*",
 ]
 
 app.add_middleware(
@@ -56,6 +56,7 @@ async def read_users():
         return {"users": users}
 
     except SQLAlchemyError as e:
+        logger.error(f"Database error while reading users: {e}")
         raise HTTPException(status_code=500, detail="Database error")
 
 class UserExistsResponse(BaseModel):
@@ -72,18 +73,23 @@ async def user_exists(user_name: str):
             return {"exists": exists}
 
     except SQLAlchemyError as e:
+        logger.error(f"Database error while checking user: {e}")
         raise HTTPException(status_code=500, detail="Database error") 
+
+
+class CreateUserRequest(BaseModel):
+    name: str
 
 class CreateUserResponse(BaseModel):
     success: bool
     id: Optional[int]
 
 @app.post("/create-user", response_model=CreateUserResponse)
-async def create_user(name: str):
+async def create_user(user: CreateUserRequest):
     
     with engine.connect() as conn:
         try:
-            stmt = insert(users_table).values(name=name)
+            stmt = insert(users_table).values(user_name=user.name)
             result = conn.execute(stmt)
             conn.commit()
 
@@ -92,4 +98,5 @@ async def create_user(name: str):
             return {"success": True, "id": inserted_id}
         
         except SQLAlchemyError as e:
+            logger.error(f"Database error while creating user: {e}")
             raise HTTPException(status_code=500, detail="Database error")
