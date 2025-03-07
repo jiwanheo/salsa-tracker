@@ -43,16 +43,9 @@ a {
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 20px;
   text-align: center;
 }
 
-.blue {
-  color: #24BBF1; 
-  font-weight: bold;
-}
-
-.red {
-  color: #FF3434; 
-  font-weight: bold;
+.main-container {
+  padding: 20px;
 }

@@ -3,13 +3,25 @@ import { useNavigate, Link } from 'react-router-dom';
 import { TextInput, TextInputContainer } from "../components/TextInput/TextInput";
 import Button from "../components/Button/Button";
 
-export default function LoginPage() {
+export default function LoginPage({ setUserExists }) {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate("/category-type");
+  const handleLogin = (username) => {
+
+    console.log(import.meta.env.VITE_API_ENDPOINT);
+
+    const userExists = fetch(`${import.meta.env.VITE_API_ENDPOINT}/user-exists?user_name=${encodeURIComponent(username)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data["exists"]) {
+          navigate("/category-type");
+        } else {
+          setUserExists(false)
+        }
+      })
+      .catch((err) => console.error("Error:", err));
   };
   
   const handleSignup = () => {
@@ -17,27 +29,30 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <h1 className="mb-5">Sign in to JAST</h1>
-      <TextInputContainer>
-        <TextInput
-          label="Username"
-          name="username"
-          placeholder=""
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        {/* <TextInput
-          label="Password"
-          name="password"
-          placeholder=""
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          forgotPassword="true"
-        /> */}
-      </TextInputContainer>
-      <Button label="Sign in" onClick={handleLogin} />
-      <Link to="/signup" className="jast-a mt-3">Sign up</Link>
+    <div className="main-container">
+      <div className="d-flex flex-column align-items-center">
+        <h1 className="mb-5">Sign in to JAST</h1>
+        <TextInputContainer>
+          <TextInput
+            label="Username"
+            name="username"
+            placeholder=""
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          {/* <TextInput
+            label="Password"
+            name="password"
+            placeholder=""
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            forgotPassword="true"
+          /> */}
+        </TextInputContainer>
+
+        <Button label="Sign in" onClick={() => handleLogin(username)} />
+        <Link to="/signup" className="jast-a mt-3">Sign up</Link>
+      </div>
     </div>
   );
 }
