@@ -86,10 +86,17 @@ class CreateUserResponse(BaseModel):
 
 @app.post("/create-user", response_model=CreateUserResponse)
 async def create_user(user: CreateUserRequest):
-    
+
+    name = user.name
+
+    # Calling the user_exists function directly here:
+    user_check = await user_exists(user_name=name)
+    if user_check["exists"]:
+        raise HTTPException(status_code=400, detail="Username already exists")
+
     with engine.connect() as conn:
         try:
-            stmt = insert(users_table).values(user_name=user.name)
+            stmt = insert(users_table).values(user_name=name)
             result = conn.execute(stmt)
             conn.commit()
 

@@ -5,8 +5,6 @@ import BackButton from "../components/BackButton/BackButton";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
-    // const [password, setPassword] = useState("");
-    // const [repassword, setRepassword] = useState("");
 
     const handleSignup = async (username) => {
 
@@ -58,20 +56,6 @@ export default function LoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              {/* <TextInput
-                label="Password"
-                name="password"
-                placeholder=""
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <TextInput
-                label="Re-type password"
-                name="re-password"
-                placeholder=""
-                value={repassword}
-                onChange={(e) => setRepassword(e.target.value)}
-              /> */}
             </TextInputContainer>
             <Button label="Sign up" onClick={() => handleSignup(username)} />
           </div>
