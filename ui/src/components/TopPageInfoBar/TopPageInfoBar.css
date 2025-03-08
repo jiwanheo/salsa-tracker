@@ -1,0 +1,25 @@
+.top-page-bar {
+    width: 100%;
+    padding: 20px;
+}
+
+/* I think we'll want to do custom colours here? */
+
+.top-page-bar.top-page-bar-error {
+    background-color: var(--light-red);
+}
+
+.top-page-bar.top-page-bar-info {
+    background-color: var(--light-grey2);
+}
+
+.top-page-bar.top-page-bar-success {
+    background-color: var(--light-green);
+}
+
+.top-page-bar h2 {
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 0;
+    font-weight: normal;
+}

@@ -7,14 +7,6 @@
     color: white;
     font-weight: bold;
     text-transform: uppercase;
-
-    --light-green: #DAF6AD;
-    --light-orange: #ffe8d1;
-    --light-red: #fcdede;
-
-    --dark-green: #028a00;
-    --dark-orange: #eb8d00;
-    --dark-red: #f71d1d;
 }
 
 .rating-badge-container {

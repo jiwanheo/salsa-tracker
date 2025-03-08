@@ -2,11 +2,15 @@ import { useState } from "react";
 import { TextInput, TextInputContainer } from "../components/TextInput/TextInput";
 import Button from "../components/Button/Button";
 import BackButton from "../components/BackButton/BackButton";
+import { useTopPageContext } from '../TopPageContext';
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
+    const { setTopPageContext } = useTopPageContext();
 
     const handleSignup = async (username) => {
+
+      // setTopPageContext("Hi Brother");
 
       const userData = {
         name: username

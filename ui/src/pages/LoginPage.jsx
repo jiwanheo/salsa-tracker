@@ -3,11 +3,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../UserContext';  // Use the custom hook
 import { TextInput, TextInputContainer } from "../components/TextInput/TextInput";
 import Button from "../components/Button/Button";
+import { useTopPageContext } from '../TopPageContext';  // import the hook
 
-export default function LoginPage({ setUserExists }) {
+export default function LoginPage() {
   const [username, setUsername] = useState("");
   const { login } = useUser();
   const navigate = useNavigate();
+  const { setTopPageContextMessage } = useTopPageContext();
 
   const handleLogin = (username) => {
 
@@ -15,12 +17,10 @@ export default function LoginPage({ setUserExists }) {
       .then((res) => res.json())
       .then((data) => {
         if (data["exists"]) {
-          setUserExists(true) 
           login(username)
           navigate("/category-type");
         } else {
-          // This shows the user doesn't exist warning at the top
-          setUserExists(false)
+          setTopPageContextMessage({text: "We couldn't find an account matching the username you entered. Please check your username and try again.", type: 'error'});
         }
       })
       .catch((err) => console.error("Error:", err));
