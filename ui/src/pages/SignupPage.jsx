@@ -6,11 +6,9 @@ import { useTopPageContext } from '../TopPageContext';
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
-    const { setTopPageContext } = useTopPageContext();
+    const { setTopPageContextMessage } = useTopPageContext();
 
     const handleSignup = async (username) => {
-
-      // setTopPageContext("Hi Brother");
 
       const userData = {
         name: username
@@ -28,13 +26,26 @@ export default function LoginPage() {
   
         // Check if the response is ok (status code 200-299)
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          const errorData = await response.json();
+          // If the error is a "Username already exists" error
+          if (response.status === 400 && errorData.detail === "Username already exists") {
+            // Update context for user exists error
+            setTopPageContextMessage({
+              text: 'Username already exists. Please try a different one.',
+              type: 'error',
+            });
+          } else {
+            throw new Error(errorData.detail);
+          }
+        } else {
+          // If the user was successfully created
+          const responseData = await response.json();
+          console.log(responseData);
+          setTopPageContextMessage({
+            text: 'User created successfully!',
+            type: 'success',
+          });
         }
-  
-        // Parse the JSON response
-        const responseData = await response.json();
-        console.log(responseData)
-  
       } catch (error) {
         // Handle any errors
         console.log(error.message);
