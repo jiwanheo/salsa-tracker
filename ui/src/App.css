@@ -4,6 +4,7 @@
   --black: #000000;
   --light-grey: #F0F0F0;
   --light-grey2: #e0e0e0;
+  --light-grey3: #d7d7d7;
   --med-grey: #cccccc;
   --dark-grey: #999999;
 
@@ -14,6 +15,8 @@
   --dark-green: #028a00;
   --dark-orange: #eb8d00;
   --dark-red: #f71d1d;
+
+  --navbar-height: 60px;
 }
 
 body {
@@ -38,6 +41,11 @@ a {
 
 .top-nav {
   width: 100%;
+}
+
+.top-nav-buttons-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .jast-a {

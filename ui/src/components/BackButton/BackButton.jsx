@@ -12,7 +12,7 @@ const BackButton = ({ text, to }) => {
     return (
         <a href="#" className="back-button" onClick={handleBackClick}>
             <i className="fas fa-arrow-left back-icon"></i> 
-            <span>{text}</span>
+            {/* <span>{text}</span> */}
         </a>
     );
 };

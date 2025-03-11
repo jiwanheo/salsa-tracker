@@ -1,0 +1,59 @@
+import "./Navbar.css"
+import ProgressBar from "../ProgressBar/ProgressBar";
+import BackButton from "../BackButton/BackButton";
+import { useNavigate } from 'react-router-dom';
+
+const Navbar = ({navbarIsOpen, setNavbarIsOpen}) => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="nav-bar z-1">
+        <div className={`nav-bar-head ${navbarIsOpen ? "open" : ""}`}>
+          <div className="nav-bar-head-main">
+            <BackButton text={"Login"} to={"/"}/>
+            <ProgressBar progress={1}/>
+            <button
+              className="navbar-button"
+              onClick={() => {
+                setNavbarIsOpen(true)
+              }}
+            > 
+              <i className="fa-regular fa-pen-to-square nav-bar-setting-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        {navbarIsOpen && (
+          <div className="nav-bar-main">
+            <div className="nav-bar-main-wrapper">
+              <ul className="nav-bar-main-list">
+                <li className="nav-bar-main-item">
+                  <a
+                    href="#" className="nav-bar-link" onClick={() => {navigate("/signup");}}
+                  >Add Category</a>
+                </li>
+                <li className="nav-bar-main-item">
+                  <a
+                    href="#" className="nav-bar-link" onClick={() => {navigate("/signup");}}
+                  >Edit Category</a>
+                </li>
+                <li className="nav-bar-main-item">
+                  <a
+                    href="#" className="nav-bar-link" onClick={() => {navigate("/signup");}}
+                  >Add Move</a>
+                </li>
+                <li className="nav-bar-main-item">
+                  <a
+                    href="#" className="nav-bar-link" onClick={() => {navigate("/signup");}}
+                  >Edit Move</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        )}
+        
+    </div>
+  )
+};
+
+export default Navbar;

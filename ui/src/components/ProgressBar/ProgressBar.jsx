@@ -5,7 +5,7 @@ const ProgressBar = ({ progress }) => {
   const totalBars = 3;
 
   return (
-    <div className="progress-bar-container mb-2">
+    <div className="progress-bar-container">
       {[...Array(totalBars)].map((_, index) => (
         <div
           key={index}
