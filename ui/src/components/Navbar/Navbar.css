@@ -17,6 +17,7 @@
     padding: 0 20px;
 }
 
+
 .navbar-button {
     background-color: transparent;
     border: none;
@@ -30,6 +31,23 @@
 
 .nav-bar-main-wrapper {
     padding: 8px 32px;
+}
+
+.nav-bar-main {
+    position: fixed;
+    top: var(--navbar-height);
+    width: 100%;
+    background-color: var(--light-grey);
+}
+
+.nav-bar-main.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-bar-main.closed {
+    opacity: 0;
+    visibility: hidden;
 }
 
 .nav-bar-main-list {
