@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AddCategoryForm from "./AddCategoryForm";
+import AddCategoryForm from "../../pages/SettingAddCategoryPage";
 import RenameCategoryForm from "./RenameCategoryForm";
 import AddMoveForm from "./AddMoveForm";
 import EditMoveForm from "./EditMoveForm";
@@ -17,9 +17,6 @@ export default function AddEditForms() {
   };
 
   // Functions to handle form submissions
-  const handleAddCategory = (categoryName, categoryType) => {
-    console.log(`Adding new category: ${categoryName} under ${categoryType}`);
-  };
 
   const handleRenameCategory = (oldCategory, newCategory) => {
     console.log(`Renaming ${oldCategory} to ${newCategory}`);

@@ -29,7 +29,7 @@ const Navbar = ({navbarIsOpen, setNavbarIsOpen}) => {
             <ul className="nav-bar-main-list">
               <li className="nav-bar-main-item">
                 <a
-                  href="#" className="nav-bar-link" onClick={() => {navigate("/signup");}}
+                  href="#" className="nav-bar-link" onClick={() => {navigate("/settings-add-category");}}
                 >Add Category</a>
               </li>
               <li className="nav-bar-main-item">

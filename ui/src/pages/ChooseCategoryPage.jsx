@@ -71,12 +71,6 @@ export default function ChooseCategoryPage() {
     return (
         <div className="main-container">
             <div className="d-flex flex-column align-items-center">
-                <div className="top-nav mb-5">
-                    <ProgressBar progress={2}/>
-                    <BackButton text={"Category type"} to={"/category-type"}/>
-                    <BackButton text={"Settings Panel"} to={"/settings"}/>
-                </div>
-
                 <h1 className="mb-5">
                     <span style={{ textTransform: 'capitalize' }}>{categoryType}</span>
                     <span> category</span>

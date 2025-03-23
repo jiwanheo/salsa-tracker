@@ -15,14 +15,6 @@ export default function ChooseCategoryTypePage() {
 
         <div className="main-container">
             <div className="d-flex flex-column align-items-center">
-                {/* <div className="top-nav mb-5">
-                    <ProgressBar progress={1}/>
-                    <div className="top-nav-buttons-container">
-                        <BackButton text={"Login"} to={"/"}/>
-                        <SettingsDrawer />
-                    </div>
-                </div> */}
-
                 <h1 className="mb-5">View moves by:</h1>
 
                 <CardsContainer 

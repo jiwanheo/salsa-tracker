@@ -7,7 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import ChooseCategoryTypePage from "./pages/ChooseCategoryTypePage"; 
 import ChooseCategoryPage from "./pages/ChooseCategoryPage"; 
 import ChooseMovePage from "./pages/ChooseMovePage"; 
-import SettingsPage from "./pages/SettingsPage"; 
+import SettingAddCategoryPage from "./pages/SettingAddCategoryPage"; 
 import SignupPage from "./pages/SignupPage"; 
 import TopPageInfoBar from './components/TopPageInfoBar/TopPageInfoBar'; // Import the fullscreen component
 import Navbar from './components/Navbar/Navbar';
@@ -34,7 +34,7 @@ export function App() {
         <Route path="/category-type" element={<ChooseCategoryTypePage />} />
         <Route path="/category" element={<ChooseCategoryPage />} />
         <Route path="/move" element={<ChooseMovePage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings-add-category" element={<SettingAddCategoryPage />} />
       </Routes>
     </>
   );
