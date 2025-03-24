@@ -1,14 +1,59 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import Button from "../components/Button/Button";
+import { useTopPageContext } from '../TopPageContext';
 
 
 export default function SettingAddCategoryPage() {
+  const { setTopPageContextMessage } = useTopPageContext();
+
   const [newCategory, setNewCategory] = useState("");
   const [newCategoryType, setNewCategoryType] = useState("Hands");
 
-  const handleAddCategory = () => {
-    console.log(`Adding new category: ${newCategory} under ${newCategoryType}`);
+  const handleAddCategory = async (newCategoryType, newCategory, setNewCategory) => {
+    if (newCategory == "") {
+      setTopPageContextMessage({
+        text: 'Category cannot be blank!',
+        type: 'error',
+      });
+      return;
+    }
+    const categoryData = {
+      category_type: encodeURIComponent(newCategoryType),
+      category_name: encodeURIComponent(newCategory)
+    };
+
+    try {
+      // Send the POST request
+      const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/create-category`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(categoryData),
+      });
+
+      // Check if the response is ok (status code 200-299)
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail);
+      } else {
+        // If the user was successfully created
+        const responseData = await response.json();
+        setTopPageContextMessage({
+          text: 'Category created successfully!',
+          type: 'success',
+        });
+      }
+    } catch (error) {
+      // Handle any errors
+      setTopPageContextMessage({
+        text: error.message,
+        type: 'error',
+      });
+    } finally {
+      setNewCategory("");  // Reset input in all cases
+    }
   };
 
   return (
@@ -18,6 +63,24 @@ export default function SettingAddCategoryPage() {
             Add New Category
         </h1>
 
+        <div className="w-100 big-radiobutton-container">
+          <label className="form-label">Category Type</label>
+          <div className="d-flex w-100 justify-content-center">
+            <div 
+              className={`w-100 big-radiobutton-container-choice ${newCategoryType == "Hands" ? "selected": ""}`}
+              onClick={(e) => setNewCategoryType("Hands")}
+            >
+              Hands
+            </div>
+            <div 
+              className={`w-100 big-radiobutton-container-choice ${newCategoryType == "Positions" ? "selected": ""}`}
+              onClick={(e) => setNewCategoryType("Positions")}
+            >              
+              Positions
+            </div>
+          </div>
+        </div>
+
         <input
           type="text"
           className="form-control"
@@ -25,17 +88,10 @@ export default function SettingAddCategoryPage() {
           onChange={(e) => setNewCategory(e.target.value)}
           placeholder="New category name"
         />
-        <select
-          className="form-select mt-2"
-          value={newCategoryType}
-          onChange={(e) => setNewCategoryType(e.target.value)}
-        >
-          <option value="Hands">Hands</option>
-          <option value="Positions">Positions</option>
-        </select>
+        
         <Button 
           label={"Add Category"}
-          onClick={() => handleAddCategory}
+          onClick={() => handleAddCategory(newCategoryType, newCategory, setNewCategory)}
         />
       </div>
     </div>

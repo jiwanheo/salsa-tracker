@@ -65,3 +65,13 @@ a {
 .main-container {
   padding: 20px;
 }
+
+.big-radiobutton-container-choice {
+  background-color: var(--light-grey3);
+  padding: 1em 0;
+}
+
+.big-radiobutton-container-choice.selected {
+  background-color: red;
+  font-weight: bold;
+}

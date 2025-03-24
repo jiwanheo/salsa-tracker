@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import create_engine, MetaData, Table, select, insert
 from sqlalchemy.exc import SQLAlchemyError
+import re
+from urllib.parse import unquote
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("uvicorn")
@@ -14,6 +16,7 @@ postgres_url = os.getenv("POSTGRES_URL")
 engine = create_engine(postgres_url)
 metadata = MetaData()
 users_table = Table("users", metadata, autoload_with=engine)
+categories_table = Table("categories", metadata, autoload_with=engine)
 
 app = FastAPI()
 
@@ -97,6 +100,65 @@ async def create_user(user: CreateUserRequest):
     with engine.connect() as conn:
         try:
             stmt = insert(users_table).values(user_name=name)
+            result = conn.execute(stmt)
+            conn.commit()
+
+            inserted_id = result.inserted_primary_key[0] if result.inserted_primary_key else None
+
+            return {"success": True, "id": inserted_id}
+        
+        except SQLAlchemyError as e:
+            logger.error(f"Database error while creating user: {e}")
+            raise HTTPException(status_code=500, detail="Database error")
+
+
+class CategoryExistsResponse(BaseModel):
+    exists: bool 
+
+@app.get("/category-exists", response_model=CategoryExistsResponse)
+async def category_exists(category_name: str):
+    try:
+        with engine.connect() as conn:
+            stmt = select(categories_table).where(categories_table.c.category_name == category_name)
+            result = conn.execute(stmt).first()
+            exists = result is not None
+            
+            return {"exists": exists}
+
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while checking user: {e}")
+        raise HTTPException(status_code=500, detail="Database error") 
+
+class CreateCategoryRequest(BaseModel):
+    category_type: str
+    category_name: str
+
+class CreateCategoryResponse(BaseModel):
+    success: bool
+    id: Optional[int]
+
+@app.post("/create-category", response_model=CreateCategoryResponse)
+async def create_category(category: CreateCategoryRequest):
+    # Decode any URL-encoded characters
+    category_type = unquote(category.category_type)
+    category_name = unquote(category.category_name)
+
+    # category_type must be "Hands" or "Positions"
+    if category_type not in ["Hands", "Positions"]:
+        raise HTTPException(status_code=400, detail="category_type must be one of `Hands` or `Positions`")
+
+    # Prevent script injection by allowing only safe characters
+    if not re.match(r"^[a-zA-Z0-9\s\-\<\>\&\'\(\)]+$", category_name):
+        raise HTTPException(status_code=400, detail="Invalid characters in category_name")
+
+    # Calling the category_exists function directly here:
+    category_check = await category_exists(category_name=category_name)
+    if category_check["exists"]:
+        raise HTTPException(status_code=400, detail="Category already exists")
+
+    with engine.connect() as conn:
+        try:
+            stmt = insert(categories_table).values(category_type=category_type, category_name=category_name)
             result = conn.execute(stmt)
             conn.commit()
 
