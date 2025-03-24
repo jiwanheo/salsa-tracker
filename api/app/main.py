@@ -41,27 +41,6 @@ async def log_requests(request: Request, call_next):
     logger.debug(f"➡️ Response status: {response.status_code}")
     return response
 
-@app.get("/")
-async def root():
-    return {"message": "API is running!"}
-
-class GetUsersResponse(BaseModel):
-    users: List[str] 
-
-@app.get("/users", response_model=GetUsersResponse)
-async def read_users():
-    try:
-        with engine.connect() as conn:
-            stmt = select(users_table)
-            result = conn.execute(stmt)
-            users = [dict_row["name"] for dict_row in result.mappings()]
-
-        return {"users": users}
-
-    except SQLAlchemyError as e:
-        logger.error(f"Database error while reading users: {e}")
-        raise HTTPException(status_code=500, detail="Database error")
-
 class UserExistsResponse(BaseModel):
     exists: bool 
 
@@ -143,9 +122,9 @@ async def create_category(category: CreateCategoryRequest):
     category_type = unquote(category.category_type)
     category_name = unquote(category.category_name)
 
-    # category_type must be "Hands" or "Positions"
-    if category_type not in ["Hands", "Positions"]:
-        raise HTTPException(status_code=400, detail="category_type must be one of `Hands` or `Positions`")
+    # category_type must be "hands" or "positions"
+    if category_type not in ["hands", "positions"]:
+        raise HTTPException(status_code=400, detail="category_type must be one of `hands` or `positions`")
 
     # Prevent script injection by allowing only safe characters
     if not re.match(r"^[a-zA-Z0-9\s\-\<\>\&\'\(\)]+$", category_name):
@@ -169,3 +148,25 @@ async def create_category(category: CreateCategoryRequest):
         except SQLAlchemyError as e:
             logger.error(f"Database error while creating user: {e}")
             raise HTTPException(status_code=500, detail="Database error")
+
+@app.get("/categories")
+async def get_categories(category_type: Optional[str] = None):
+    try:
+        with engine.connect() as conn:
+            if category_type:
+                stmt = select(categories_table).where(categories_table.c.category_type == category_type)
+            else:
+                stmt = select(categories_table)
+            
+            
+            result = conn.execute(stmt)
+            rows = result.fetchall()
+
+            column_names = categories_table.columns.keys()
+            categories = [dict(zip(column_names, row)) for row in rows]
+
+            return categories
+
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while checking user: {e}")
+        raise HTTPException(status_code=500, detail="Database error") 

@@ -79,6 +79,21 @@ Components:
 
 ### Fixed
 
+## 2025-03-23 - [Unreleased]
+
+Implemented add category API/DB
+ 
+### Added
+
+Pages:
+- Add category setting page
+
+### Changed
+
+Choose category page pulls from DB 
+
+### Fixed
+
 ## Todo
 
 ### Collapsible Card
@@ -88,3 +103,8 @@ Components:
 
 ### Admin page / DB
 - Hook it up to a DB
+
+
+### User login and other API methods
+- user_exists should probably use request model? 
+- For GET responses, should probably use data model?

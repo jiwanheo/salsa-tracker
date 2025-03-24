@@ -9,7 +9,7 @@ const Card = ({ image, textSection, onClick }) => {
                 </div>
             )}
             <div className={`card-body`}>
-                {textSection}
+                <p>{textSection}</p>
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ export default function SettingAddCategoryPage() {
   const { setTopPageContextMessage } = useTopPageContext();
 
   const [newCategory, setNewCategory] = useState("");
-  const [newCategoryType, setNewCategoryType] = useState("Hands");
+  const [newCategoryType, setNewCategoryType] = useState("hands");
 
   const handleAddCategory = async (newCategoryType, newCategory, setNewCategory) => {
     if (newCategory == "") {
@@ -67,14 +67,14 @@ export default function SettingAddCategoryPage() {
           <label className="form-label">Category Type</label>
           <div className="d-flex w-100 justify-content-center">
             <div 
-              className={`w-100 big-radiobutton-container-choice ${newCategoryType == "Hands" ? "selected": ""}`}
-              onClick={(e) => setNewCategoryType("Hands")}
+              className={`w-100 big-radiobutton-container-choice ${newCategoryType == "hands" ? "selected": ""}`}
+              onClick={(e) => setNewCategoryType("hands")}
             >
               Hands
             </div>
             <div 
-              className={`w-100 big-radiobutton-container-choice ${newCategoryType == "Positions" ? "selected": ""}`}
-              onClick={(e) => setNewCategoryType("Positions")}
+              className={`w-100 big-radiobutton-container-choice ${newCategoryType == "positions" ? "selected": ""}`}
+              onClick={(e) => setNewCategoryType("positions")}
             >              
               Positions
             </div>
