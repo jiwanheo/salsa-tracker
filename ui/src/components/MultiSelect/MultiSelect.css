@@ -1,0 +1,17 @@
+.multiselect-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.multi-select-ul-container {
+    padding: 18px 20px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    background-color: var(--bs-body-bg);
+}
+
+.multi-select-ul {
+    list-style: none;
+    padding-left: 0;
+    text-align: left;
+}

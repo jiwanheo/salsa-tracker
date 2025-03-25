@@ -98,11 +98,22 @@ Choose category page pulls from DB
  
 ### Added
 
+- moves table
+- Add move setting page
+- MultiSelect component
+    - Fetches DB to get options
+
 ### Changed
 
 ### Fixed
 
 ## Todo
+
+### MultiSelect component
+- Textwrapping on badges (container needs to get taller)
+- Component needs to "return" the selection to the top level
+- Set Rating needs to be a radio button
+- Then hook up the POST method
 
 ### Collapsible Card
 - Click isolation (Clicking change rating/video shouldn't collapse the card)

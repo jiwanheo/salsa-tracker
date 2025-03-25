@@ -3,6 +3,7 @@ import Card from "../components/Cards/Card";
 import CardsContainer from "../components/Cards/CardsContainer";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BackButton from "../components/BackButton/BackButton";
+import { getCategories } from '../utils/getCategories';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getRandomImage } from "../utils/RandomImage";
 
@@ -14,38 +15,6 @@ export default function ChooseCategoryPage() {
     const categoryType = queryParams.get('type');
 
     const [categories, setCategories] = useState([]);
-
-    const getCategories = async (category_type) => {
-
-        try {
-            const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/categories`);
-        
-            if (category_type) {
-                url.searchParams.append('category_type', category_type);  // Add category_type as a query parameter
-            }
-
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            // Check if the response is ok (status code 200-299)
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail);
-            } else {
-                // If the user was successfully created
-                const responseData = await response.json();
-                return responseData;
-            }
-        } catch (error) {
-            // Handle any errors
-            console.log(error.message);
-            return [];
-        }
-    };
 
     useEffect(() => {
         const fetchCategoriesData = async () => {
