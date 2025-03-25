@@ -39,7 +39,7 @@ const Navbar = ({navbarIsOpen, setNavbarIsOpen}) => {
               </li>
               <li className="nav-bar-main-item">
                 <a
-                  href="#" className="nav-bar-link" onClick={() => {navigate("/signup");}}
+                  href="#" className="nav-bar-link" onClick={() => {navigate("/settings-add-move");}}
                 >Add Move</a>
               </li>
               <li className="nav-bar-main-item">
