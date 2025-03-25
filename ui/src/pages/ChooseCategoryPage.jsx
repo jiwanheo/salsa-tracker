@@ -4,6 +4,7 @@ import CardsContainer from "../components/Cards/CardsContainer";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BackButton from "../components/BackButton/BackButton";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getRandomImage } from "../utils/RandomImage";
 
 export default function ChooseCategoryPage() {
     const location = useLocation();
@@ -63,7 +64,7 @@ export default function ChooseCategoryPage() {
     // Need a function to break up the text
     const category_array = categories.map(category => ({
         ...category,
-        image: "https://qotoqot.com/sad-animations/img/100/sitting_alone/sitting_alone.png"
+        image: getRandomImage()
     }))
 
     return (

@@ -3,6 +3,7 @@ import CardsContainer from "../components/Cards/CardsContainer";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BackButton from "../components/BackButton/BackButton";
 import { useNavigate } from 'react-router-dom';
+import { getRandomImage } from "../utils/RandomImage";
 
 export default function ChooseCategoryTypePage() {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function ChooseCategoryTypePage() {
                     cards={
                         <>
                             <Card
-                                image={"https://qotoqot.com/sad-animations/img/100/shy/shy.png"}
+                                image={getRandomImage()}
                                 textSection={
                                     <div className="text-start">
                                         <h2>Hands</h2>
@@ -32,7 +33,7 @@ export default function ChooseCategoryTypePage() {
                             ></Card>
 
                             <Card
-                                image={"https://qotoqot.com/sad-animations/img/100/insomnia/insomnia.png"}
+                                image={getRandomImage()}
                                 textSection={
                                     <div className="text-start">
                                         <h2 className="text-lg font-bold">Positions</h2>
