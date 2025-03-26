@@ -1,0 +1,43 @@
+.radiobutton-option {
+    cursor: pointer;
+    width: 150px;
+}
+
+.radiobutton-option.selected {
+    border: 3px solid #000000;
+}
+
+.radiobutton-body-content {
+    overflow: auto;
+}
+
+.radiobutton-body-content-main {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr max-content;
+}
+
+.radiobutton-circle {
+    position: absolute;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #000000;
+}
+
+.radiobutton-circle.selected {
+    background-color: #000000;
+}
+
+.radiobutton-image-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    overflow: hidden; 
+}
+
+.radiobutton-image-container img {
+    max-width: 100%;
+    height: auto; 
+    object-fit:contain 
+}

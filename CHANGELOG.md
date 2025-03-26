@@ -111,8 +111,6 @@ Choose category page pulls from DB
 
 ### MultiSelect component
 - Textwrapping on badges (container needs to get taller)
-- Component needs to "return" the selection to the top level
-- Set Rating needs to be a radio button
 - Then hook up the POST method
 
 ### Collapsible Card

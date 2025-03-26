@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 // import PropTypes from "prop-types";
 import MultiSelect from "../components/MultiSelect/MultiSelect";
 import Button from "../components/Button/Button";
+import RadioButton from "../components/RadioButton/RadioButton";
 import { getCategories } from "../utils/getCategories";
 import { useTopPageContext } from '../TopPageContext';
 
@@ -9,8 +10,12 @@ export default function SettingAddMovePage() {
     const { setTopPageContextMessage } = useTopPageContext();
 
     const [newMove, setNewMove] = useState("");
-    const [multiselectOptions, setMultiselectOptions] = useState([]);
-    const [newMoveRating, setNewMoveRating] = useState("");
+    const [newMoveVideo, setNewMoveVideo] = useState("");
+    const [newMoveCategories, setNewMoveCategories] = useState([]);
+    const [newMoveRating, setNewMoveRating] = useState(null);
+
+    const [categoryOptions, setCategoryOptions] = useState([]);
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,7 +46,7 @@ export default function SettingAddMovePage() {
                     items: formattedCategories[key],
                 }));
 
-                setMultiselectOptions(categoryArray);
+                setCategoryOptions(categoryArray);
             } catch (err) {
                 console.log(err.message);
             }
@@ -49,6 +54,78 @@ export default function SettingAddMovePage() {
     
         fetchData();
     }, []);
+
+    const handleAddMove = async (newMove, newMoveVideo, newMoveCategories, newMoveRating, setNewMove, setNewMoveVideo, setNewMoveCategories, setNewMoveRating) => {
+        if (newMove == "") {
+            setTopPageContextMessage({
+              text: 'Move cannot be blank!',
+              type: 'error',
+            });
+            return;
+        }
+
+        if (newMoveCategories.length == 0) {
+            setTopPageContextMessage({
+              text: 'Move must have at least 1 category!',
+              type: 'error',
+            });
+            return;
+        }
+
+        if (newMoveRating == null) {
+            setTopPageContextMessage({
+              text: 'Move must have a rating!',
+              type: 'error',
+            });
+            return;
+        }
+
+        const newMoveCategories_ids = newMoveCategories.map(item => item.id); 
+        const moveData = {
+            move_name: encodeURIComponent(newMove),
+            move_video: encodeURIComponent(newMoveVideo),
+            move_categories: encodeURIComponent(JSON.stringify(newMoveCategories_ids)),
+            move_rating: encodeURIComponent(newMoveRating)
+        };
+
+        console.log(moveData)
+
+        try {
+            console.log("hi")
+            // Send the POST request
+            const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/create-move`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json', 
+              },
+              body: JSON.stringify(moveData),
+            });
+      
+            // Check if the response is ok (status code 200-299)
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.detail);
+            } else {
+              // If the user was successfully created
+              const responseData = await response.json();
+              setTopPageContextMessage({
+                text: 'Move created successfully!',
+                type: 'success',
+              });
+            }
+        } catch (error) {
+            // Handle any errors
+            setTopPageContextMessage({
+                text: error.message,
+                type: 'error',
+            });
+        } finally {
+            setNewMove("");
+            setNewMoveVideo("");
+            setNewMoveCategories([]);
+            setNewMoveRating(null);
+        }
+    }
 
     return (
         <div className="main-container">
@@ -65,17 +142,37 @@ export default function SettingAddMovePage() {
                     placeholder="New move name"
                 />
 
-                <span>Select Category(ies)</span>
-                <MultiSelect 
-                    options={multiselectOptions}
-                />
-
                 <input
                     type="text"
                     className="form-control"
-                    value={newMoveRating}
-                    onChange={(e) => setNewMoveRating(e.target.value)}
-                    placeholder="Rating"
+                    value={newMoveVideo}
+                    onChange={(e) => setNewMoveVideo(e.target.value)}
+                    placeholder="New move video URL"
+                />
+
+                <span>Select Category(ies)</span>
+                <MultiSelect 
+                    options={categoryOptions}
+                    newMoveCategories = {newMoveCategories}
+                    setNewMoveCategories = {setNewMoveCategories}
+                />
+
+                <RadioButton 
+                    label = "Rating"
+                    options = {
+                        [
+                            { value: "good", label: "Good" },
+                            { value: "ok", label: "OK" },
+                            { value: "bad", label: "Bad" },
+                        ]
+                    }
+                    newMoveRating = {newMoveRating}
+                    setNewMoveRating = { setNewMoveRating }
+                />
+
+                <Button 
+                    label={"Add Move"}
+                    onClick={() => handleAddMove(newMove, newMoveVideo, newMoveCategories, newMoveRating, setNewMove, setNewMoveVideo, setNewMoveCategories, setNewMoveRating)}
                 />
             </div>
         </div>

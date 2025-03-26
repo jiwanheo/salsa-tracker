@@ -1,14 +1,13 @@
 import "./MultiSelect.css";
 import { useState, useRef, useEffect } from "react";
 
-export default function MultiSelect({options}) {
-    const [selectedOptions, setSelectedOptions] = useState([]);
+export default function MultiSelect({options, newMoveCategories, setNewMoveCategories}) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     // Handle selection changes
     const handleCheckboxChange = (option) => {
-        setSelectedOptions((prev) => {
+        setNewMoveCategories((prev) => {
             const exists = prev.find((item) => item.id === option.id);
             return exists ? prev.filter((item) => item.id !== option.id) : [...prev, option];
         });
@@ -36,8 +35,8 @@ export default function MultiSelect({options}) {
                     className="form-control d-flex align-items-center mb-2 shadow-sm"
                     onClick={toggleDropdown}
                 >
-                    {selectedOptions.length > 0 ? (
-                        selectedOptions.map((option) => (
+                    {newMoveCategories.length > 0 ? (
+                        newMoveCategories.map((option) => (
                             <span key={option.id} className="badge bg-primary me-2">
                                 {option.name} &times;
                             </span>
@@ -61,7 +60,7 @@ export default function MultiSelect({options}) {
                                                 className="form-check-input"
                                                 type="checkbox"
                                                 id={item.id}
-                                                checked={selectedOptions.some((opt) => opt.id === item.id)}
+                                                checked={newMoveCategories.some((opt) => opt.id === item.id)}
                                                 onChange={() => handleCheckboxChange(item)}
                                             />
                                             <label className="form-check-label" htmlFor={item.id}>
