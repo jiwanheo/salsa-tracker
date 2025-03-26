@@ -84,14 +84,13 @@ export default function SettingAddMovePage() {
         const moveData = {
             move_name: encodeURIComponent(newMove),
             move_video: encodeURIComponent(newMoveVideo),
-            move_categories: encodeURIComponent(JSON.stringify(newMoveCategories_ids)),
+            move_categories: newMoveCategories_ids,
             move_rating: encodeURIComponent(newMoveRating)
         };
 
         console.log(moveData)
 
         try {
-            console.log("hi")
             // Send the POST request
             const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/create-move`, {
               method: 'POST',

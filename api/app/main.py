@@ -17,6 +17,7 @@ engine = create_engine(postgres_url)
 metadata = MetaData()
 users_table = Table("users", metadata, autoload_with=engine)
 categories_table = Table("categories", metadata, autoload_with=engine)
+moves_table = Table("moves", metadata, autoload_with=engine)
 
 app = FastAPI()
 
@@ -170,3 +171,36 @@ async def get_categories(category_type: Optional[str] = None):
     except SQLAlchemyError as e:
         logger.error(f"Database error while checking user: {e}")
         raise HTTPException(status_code=500, detail="Database error") 
+
+class CreateMoveRequest(BaseModel):
+    move_name: str
+    move_video: str
+    move_categories: List[int]
+    move_rating: str
+
+class CreateMoveResponse(BaseModel):
+    success: bool
+    id: Optional[int]
+
+# @app.post("/create-move", response_model=CreateMoveResponse)
+@app.post("/create-move", response_model=CreateMoveResponse)
+async def create_move(move: CreateMoveRequest):
+    # Decode any URL-encoded characters
+    move_name = unquote(move.move_name)
+    move_video = unquote(move.move_video)
+    move_categories = move.move_categories
+    move_rating = unquote(move.move_rating)
+
+    with engine.connect() as conn:
+        try:
+            stmt = insert(moves_table).values(move_name=move_name, move_video=move_video, move_category=move_categories, move_rating=move_rating)
+            result = conn.execute(stmt)
+            conn.commit()
+
+            inserted_id = result.inserted_primary_key[0] if result.inserted_primary_key else None
+
+            return {"success": True, "id": inserted_id}
+        
+        except SQLAlchemyError as e:
+            logger.error(f"Database error while creating move: {e}")
+            raise HTTPException(status_code=500, detail="Database error")

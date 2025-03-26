@@ -107,11 +107,23 @@ Choose category page pulls from DB
 
 ### Fixed
 
+## 2025-03-25 - [Unreleased]
+ 
+### Added
+
+- Hooked up Add moves page to DB and API
+- Added radiobutton
+
+### Changed
+
+### Fixed
+
 ## Todo
 
+### Radiobutton
+- Find all pages that use radiobutton, and replace with component
 ### MultiSelect component
 - Textwrapping on badges (container needs to get taller)
-- Then hook up the POST method
 
 ### Collapsible Card
 - Click isolation (Clicking change rating/video shouldn't collapse the card)
