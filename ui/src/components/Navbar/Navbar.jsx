@@ -10,7 +10,7 @@ const Navbar = ({navbarIsOpen, setNavbarIsOpen}) => {
     <div className="nav-bar z-2">
         <div className={`nav-bar-head ${navbarIsOpen ? "open" : ""}`}>
           <div className="nav-bar-head-main">
-            <BackButton text={"Login"} to={"/"}/>
+            <BackButton text={"Login"} />
             <ProgressBar progress={1}/>
             <button
               className="navbar-button"
