@@ -172,6 +172,23 @@ async def get_categories(category_type: Optional[str] = None):
         logger.error(f"Database error while checking user: {e}")
         raise HTTPException(status_code=500, detail="Database error") 
 
+@app.get("/category_by_id")
+async def get_category_by_id(category_id: int):
+    try:
+        with engine.connect() as conn:
+            stmt = select(categories_table.c.category_name).where(categories_table.c.category_id == category_id)
+            
+            result = conn.execute(stmt).fetchone()
+
+            if result:
+                return {"category_name": result[0]}
+            else:
+                raise HTTPException(status_code=404, detail="Category not found")
+
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while checking user: {e}")
+        raise HTTPException(status_code=500, detail="Database error") 
+
 class CreateMoveRequest(BaseModel):
     move_name: str
     move_video: str
@@ -217,9 +234,6 @@ async def get_moves_by_category(category: int):
 
             column_names = moves_table.columns.keys()
             moves = [dict(zip(column_names, row)) for row in rows]
-
-            print(f"category {category} ")
-            print(f"moves {moves} ")
 
             return moves
 
