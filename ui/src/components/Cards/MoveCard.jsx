@@ -21,7 +21,10 @@ const MoveCard = ({ moveName, moveDescription, rating: initialRating, video }) =
                     <p className="move-description text-start">{moveDescription}</p>
                 </div>
                 
-                <div className={`collapse-content ${isOpen ? 'show' : ''}`}>
+                <div 
+                    className={`collapse-content ${isOpen ? 'show' : ''}`}
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <div className="collapse-content-body">
                         <div className="mb-4">
                             <img src={video} alt="Preview" className="img-fluid" />
@@ -39,7 +42,7 @@ const MoveCard = ({ moveName, moveDescription, rating: initialRating, video }) =
                 </div>
 
                 <div>
-                    <i class={`fa-solid fa-angle-down chevron ${isOpen ? "rotate" : ""}`}></i>
+                    <i className={`fa-solid fa-angle-down chevron ${isOpen ? "rotate" : ""}`}></i>
                 </div>
 
             </div>

@@ -2,7 +2,9 @@ import MoveCard from "../components/Cards/MoveCard";
 import CardsContainer from "../components/Cards/CardsContainer";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BackButton from "../components/BackButton/BackButton";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getMovesByCategory } from "../utils/getMovesByCategory";
 
 export default function ChooseMovePage() {
     const location = useLocation();
@@ -11,6 +13,19 @@ export default function ChooseMovePage() {
     const queryParams = new URLSearchParams(location.search);
     const categoryType = queryParams.get('type');
     const category = queryParams.get('category');
+
+    const [moves, setMoves] = useState([]);
+    
+    useEffect(() => {
+        const fetchMovesData = async () => {
+            const fetchedMoves = await getMovesByCategory(category);
+            setMoves(fetchedMoves); 
+        };
+        fetchMovesData();
+
+        console.log("moves")
+        console.log(moves)
+    }, [category]);
 
     // This would eventually be a DB call
     const translations = {

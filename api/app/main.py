@@ -175,6 +175,7 @@ async def get_categories(category_type: Optional[str] = None):
 class CreateMoveRequest(BaseModel):
     move_name: str
     move_video: str
+    move_description: str
     move_categories: List[int]
     move_rating: str
 
@@ -182,18 +183,18 @@ class CreateMoveResponse(BaseModel):
     success: bool
     id: Optional[int]
 
-# @app.post("/create-move", response_model=CreateMoveResponse)
 @app.post("/create-move", response_model=CreateMoveResponse)
 async def create_move(move: CreateMoveRequest):
     # Decode any URL-encoded characters
     move_name = unquote(move.move_name)
     move_video = unquote(move.move_video)
+    move_description = unquote(move.move_description)
     move_categories = move.move_categories
     move_rating = unquote(move.move_rating)
 
     with engine.connect() as conn:
         try:
-            stmt = insert(moves_table).values(move_name=move_name, move_video=move_video, move_category=move_categories, move_rating=move_rating)
+            stmt = insert(moves_table).values(move_name=move_name, move_video=move_video, move_description=move_description, move_category=move_categories, move_rating=move_rating)
             result = conn.execute(stmt)
             conn.commit()
 
@@ -202,5 +203,26 @@ async def create_move(move: CreateMoveRequest):
             return {"success": True, "id": inserted_id}
         
         except SQLAlchemyError as e:
+            logger.error(f"Database error while creating move: {e}")
+            raise HTTPException(status_code=500, detail="Database error")
+
+@app.get("/moves_by_category")
+async def get_moves_by_category(category: int):
+    try:
+        with engine.connect() as conn:
+            stmt = select(moves_table).where(moves_table.c.move_category.contains([category]))
+            
+            result = conn.execute(stmt)
+            rows = result.fetchall()
+
+            column_names = moves_table.columns.keys()
+            moves = [dict(zip(column_names, row)) for row in rows]
+
+            print(f"category {category} ")
+            print(f"moves {moves} ")
+
+            return moves
+
+    except SQLAlchemyError as e:
             logger.error(f"Database error while creating move: {e}")
             raise HTTPException(status_code=500, detail="Database error")

@@ -13,13 +13,12 @@ const RatingBadge = ({ rating, selectedRating, onClick }) => {
         }
       };
     
-      console.log(rating, selectedRating)
     const isGreyedOut = rating !== selectedRating;
 
     return (
         <div className="rating-badge-container">
           <div className={`rating-badge rating-badge-${rating} ${isGreyedOut ? "greyed-out-rating-badge" : ""} w-100`} onClick={onClick}>
-              <i class={`fa-regular fa-face-${getBadgeEmoji()}`}></i>
+              <i className={`fa-regular fa-face-${getBadgeEmoji()}`}></i>
           </div>
         </div>
     );

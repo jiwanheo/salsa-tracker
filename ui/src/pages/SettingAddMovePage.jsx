@@ -11,6 +11,7 @@ export default function SettingAddMovePage() {
 
     const [newMove, setNewMove] = useState("");
     const [newMoveVideo, setNewMoveVideo] = useState("");
+    const [newMoveDescription, setNewMoveDescription] = useState("");
     const [newMoveCategories, setNewMoveCategories] = useState([]);
     const [newMoveRating, setNewMoveRating] = useState(null);
 
@@ -55,7 +56,7 @@ export default function SettingAddMovePage() {
         fetchData();
     }, []);
 
-    const handleAddMove = async (newMove, newMoveVideo, newMoveCategories, newMoveRating, setNewMove, setNewMoveVideo, setNewMoveCategories, setNewMoveRating) => {
+    const handleAddMove = async (newMove, newMoveVideo, newMoveDescription, newMoveCategories, newMoveRating, setNewMove, setNewMoveVideo, setNewMoveDescription, setNewMoveCategories, setNewMoveRating) => {
         if (newMove == "") {
             setTopPageContextMessage({
               text: 'Move cannot be blank!',
@@ -84,6 +85,7 @@ export default function SettingAddMovePage() {
         const moveData = {
             move_name: encodeURIComponent(newMove),
             move_video: encodeURIComponent(newMoveVideo),
+            move_description: encodeURIComponent(newMoveDescription),
             move_categories: newMoveCategories_ids,
             move_rating: encodeURIComponent(newMoveRating)
         };
@@ -121,6 +123,7 @@ export default function SettingAddMovePage() {
         } finally {
             setNewMove("");
             setNewMoveVideo("");
+            setNewMoveDescription("");
             setNewMoveCategories([]);
             setNewMoveRating(null);
         }
@@ -149,6 +152,13 @@ export default function SettingAddMovePage() {
                     placeholder="New move video URL"
                 />
 
+                <textarea
+                    className="form-control"
+                    value={newMoveDescription}
+                    onChange={(e) => setNewMoveDescription(e.target.value)}
+                    placeholder="New move description"
+                />
+
                 <span>Select Category(ies)</span>
                 <MultiSelect 
                     options={categoryOptions}
@@ -171,7 +181,7 @@ export default function SettingAddMovePage() {
 
                 <Button 
                     label={"Add Move"}
-                    onClick={() => handleAddMove(newMove, newMoveVideo, newMoveCategories, newMoveRating, setNewMove, setNewMoveVideo, setNewMoveCategories, setNewMoveRating)}
+                    onClick={() => handleAddMove(newMove, newMoveVideo, newMoveDescription, newMoveCategories, newMoveRating, setNewMove, setNewMoveVideo, setNewMoveDescription, setNewMoveCategories, setNewMoveRating)}
                 />
             </div>
         </div>

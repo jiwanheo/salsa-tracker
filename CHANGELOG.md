@@ -120,6 +120,10 @@ Choose category page pulls from DB
 
 ## Todo
 
+### Moves page
+CORS in the API
+
+
 ### Radiobutton
 - Find all pages that use radiobutton, and replace with component
 ### MultiSelect component
