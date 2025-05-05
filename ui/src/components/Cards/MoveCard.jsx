@@ -27,7 +27,15 @@ const MoveCard = ({ moveName, moveDescription, rating: initialRating, video }) =
                 >
                     <div className="collapse-content-body">
                         <div className="mb-4">
-                            <img src={video} alt="Preview" className="img-fluid" />
+                        <div style={{ width: "100%", maxWidth: "600px", margin: "0 auto" }}>
+                            <video
+                                src={video}
+                                controls
+                                style={{ width: "100%", height: "auto", display: "block" }}
+                            >
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                         </div>
                         <div className="change-rating d-flex flex-column align-items-center mb-4">
                             <h6>Change Rating</h6>
