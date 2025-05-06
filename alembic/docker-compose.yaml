@@ -6,7 +6,7 @@ services:
   alembic:
     build: .
     env_file: 
-      - .env
+      - .env.alembic
     volumes:
     - ./alembic.ini:/alembic/alembic.ini
     - ./migrations:/alembic/migrations

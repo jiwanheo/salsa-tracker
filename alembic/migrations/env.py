@@ -16,7 +16,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Get the database URL from environment variables
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("ALEMBIC_DATABASE_URL")
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
 # add your model's MetaData object here

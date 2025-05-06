@@ -1,23 +1,23 @@
 DC := docker compose
 
 alembic-revision:
-	docker compose -f alembic/docker-compose.yaml run --rm alembic alembic revision -m "$(m)"
+	docker compose -f alembic/docker-compose-dev.yaml run --rm alembic alembic revision -m "$(m)"
 
 alembic-upgrade:
-	docker compose -f alembic/docker-compose.yaml run --rm alembic alembic upgrade head
+	docker compose -f alembic/docker-compose-dev.yaml run --rm alembic alembic upgrade head
 
 
 # Dev environment
 up:
-	$(DC) up -d
+	$(DC) -f docker-compose-dev.yaml up -d
 
 down: 
-	$(DC) down
+	$(DC) -f docker-compose-dev.yaml down
 
 
 # Rebuild specific service
 rebuild-api:
-	$(DC) up -d --build api
+	$(DC) -f docker-compose-dev.yaml up -d --build api
 
 rebuild-ui:
-	$(DC) up -d --build ui
+	$(DC) -f docker-compose-dev.yaml up -d --build ui
