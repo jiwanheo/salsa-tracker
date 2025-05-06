@@ -1,0 +1,36 @@
+name: Deploy Dev
+
+on:
+  push:
+    branches:
+      - dev
+      
+jobs:
+  deploy:
+    runs-on: [self-hosted, vm] # This specifies the environment the job will run in
+          
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Pull .env 
+        run: cp .env .env 
+
+      - name: Run Alembic migrations
+        run: make alembic-upgrade
+        
+      - name: Start all dev containers
+        run: docker compose up -f docker-compose-dev.yaml up -d --build
+
+      - name: Wait for services to be healthy
+        run: |
+          sleep 10
+          docker compose -f docker-compose-dev.yaml ps
+      
+      - name: Done!
+        run: echo "Dev deployment completed 🎉"
+        
+        

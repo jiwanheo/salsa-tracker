@@ -141,3 +141,17 @@ CORS in the API
 ### User login and other API methods
 - user_exists should probably use request model? 
 - For GET responses, should probably use data model?
+
+## 2025-05-04 - [Unreleased]
+ 
+### Added
+
+- Decent checkpoint to the app
+- Building dev pipeline now
+    - Dev uses docker-compose.yaml
+        - which doesn't actually use Dockerfile in UI (it's just vite)
+    - Separate .env file in UI
+
+### Changed
+
+### Fixed
