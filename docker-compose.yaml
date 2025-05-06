@@ -6,6 +6,7 @@ networks:
 
 volumes:
   jast_db_data:
+  ui_node_modules:
 
 services:
   db:
@@ -41,7 +42,7 @@ services:
     working_dir: /ui  # No extra mounting needed
     volumes:
       - ./ui:/ui  # Mount UI source code in production
-      - /ui/node_modules  # Keep node_modules in the container
+      - ui_node_modules:/ui/node_modules  # Keep node_modules in the container
     ports:
       - "5173:5173"
     command: >
