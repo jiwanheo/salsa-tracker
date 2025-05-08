@@ -6,6 +6,8 @@ alembic-revision:
 alembic-upgrade:
 	sudo $(DC) -f alembic/docker-compose.yaml run --rm alembic alembic upgrade head
 
+alembic-seed:
+	sudo $(DC) -f alembic/docker-compose.yaml run --rm alembic python3 seed.py
 
 # Dev environment
 up:

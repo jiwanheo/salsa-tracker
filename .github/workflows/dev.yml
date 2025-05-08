@@ -40,6 +40,9 @@ jobs:
       - name: Run Alembic migrations
         run: make alembic-upgrade
 
+      - name: Run Alembic DB seeding (if necessary)
+        run: make alembic-seed
+
       - name: Wait for services to be healthy
         run: |
           sleep 10
