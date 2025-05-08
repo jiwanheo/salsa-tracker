@@ -35,7 +35,7 @@ jobs:
       #     sudo docker network create jast_network
         
       - name: Start all dev containers
-        run: docker compose up -f docker-compose-dev.yaml up -d --build
+        run: docker compose -f docker-compose-dev.yaml up -d --build
 
       - name: Run Alembic migrations
         run: make alembic-upgrade
