@@ -156,7 +156,7 @@ CORS in the API
 
 ### Fixed
 
-## 2025-05-04 - [Unreleased]
+## 2025-05-07 - [Unreleased]
  
 ### Added
 
