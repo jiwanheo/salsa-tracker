@@ -32,7 +32,7 @@ jobs:
 
       - name: Create Vite .env file
         run: |
-          echo "VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT }}" >> ui/.env.development
+          echo "VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT_DEV }}" >> ui/.env.development
         
       - name: Start all dev containers
         run: sudo docker compose -f docker-compose-dev.yaml up -d --build
