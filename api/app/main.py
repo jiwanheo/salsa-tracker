@@ -7,7 +7,13 @@ from pydantic import BaseModel
 from sqlalchemy import create_engine, MetaData, Table, select, insert
 from sqlalchemy.exc import SQLAlchemyError
 import re
+
 from urllib.parse import unquote
+from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path(__file__).resolve().parents[1] / '.env'
+load_dotenv(dotenv_path=env_path)
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("uvicorn")
@@ -21,14 +27,9 @@ moves_table = Table("moves", metadata, autoload_with=engine)
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:5173",
-    # "*",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=os.getenv("CORS_ALLOWED", "").split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
