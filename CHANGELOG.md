@@ -155,3 +155,14 @@ CORS in the API
 ### Changed
 
 ### Fixed
+
+## 2025-05-04 - [Unreleased]
+ 
+### Added
+
+- Dev pipeline somewhat at a good place
+    - Pushed most environment variable to github actions secrets with "DEV" suffix
+
+### Changed
+
+### Fixed
