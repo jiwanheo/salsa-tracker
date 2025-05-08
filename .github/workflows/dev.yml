@@ -28,7 +28,12 @@ jobs:
       - name: Create alembic .env file
         run: |
           echo "ALEMBIC_DATABASE_URL=${{ secrets.ALEMBIC_DATABASE_URL }}" >> alembic/.env.alembic
-
+          
+      - name: Create Docker network if not exists
+        run: |
+          docker network inspect jast_network >/dev/null 2>&1 || \
+          docker network create jast_network
+          
       - name: Run Alembic migrations
         run: make alembic-upgrade
         
