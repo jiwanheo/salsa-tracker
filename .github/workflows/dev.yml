@@ -37,15 +37,15 @@ jobs:
       - name: Start all dev containers
         run: sudo docker compose -f docker-compose-dev.yaml up -d --build
 
+      - name: Wait for services to be healthy
+        run: |
+          sleep 10
+          sudo docker compose -f docker-compose-dev.yaml ps
+          
       - name: Run Alembic migrations
         run: make alembic-upgrade
 
       - name: Run Alembic DB seeding (if necessary)
         run: make alembic-seed
-
-      - name: Wait for services to be healthy
-        run: |
-          sleep 10
-          sudo docker compose -f docker-compose-dev.yaml ps
         
         
