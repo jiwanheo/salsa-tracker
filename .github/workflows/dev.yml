@@ -29,10 +29,9 @@ jobs:
         run: |
           echo "ALEMBIC_DATABASE_URL=${{ secrets.ALEMBIC_DATABASE_URL }}" >> alembic/.env.alembic
 
-      # - name: Create Docker network if not exists
-      #   run: |
-      #     sudo docker network inspect jast_network >/dev/null 2>&1 || \
-      #     sudo docker network create jast_network
+      - name: Create Vite .env file
+        run: |
+          echo "VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT }}" >> ui/.env.development
         
       - name: Start all dev containers
         run: sudo docker compose -f docker-compose-dev.yaml up -d --build
