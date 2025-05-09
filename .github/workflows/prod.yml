@@ -33,14 +33,25 @@ jobs:
       - name: Create Vite .env file
         run: |
           echo "VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT_PROD }}" >> ui/.env.production
-        
+
+      - name: Build Vite UI
+        run: |
+          cd ui
+          npm ci
+          npm run build
+
+      - name: Copy Vite dist to /opt
+        run: |
+          sudo rm -rf /opt/salsa-tracker
+          sudo cp -r ui/dist /opt/salsa-tracker
+
       - name: Start all prod containers
         run: sudo docker compose -f docker-compose-prod.yaml up -d --build
 
-      - name: Wait for services to be healthy
-        run: |
-          sleep 10
-          sudo docker compose -f docker-compose-dev.yaml ps
+      # - name: Wait for services to be healthy
+      #   run: |
+      #     sleep 10
+      #     sudo docker compose -f docker-compose-dev.yaml ps
           
       # - name: Run Alembic migrations
       #   run: make alembic-upgrade

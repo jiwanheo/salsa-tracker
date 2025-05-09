@@ -17,7 +17,6 @@ services:
     # set shared memory limit when using docker-compose
     shm_size: 128mb
     volumes:
-      # Eventually want to mount a data volume
       - jast_db_data:/var/lib/postgresql/data
 
     ports:
@@ -33,17 +32,6 @@ services:
     networks:
       - jast_network
 
-  ui:
-    build:
-      context: ./ui
-      dockerfile: Dockerfile
-    container_name: jast_ui
-    command: sh -c "npm run build && cp -r dist/* /opt/salsa-tracker"
-    volumes:
-    - ./dist:/opt/salsa-tracker
-    networks:
-      - jast_network
-  
   api:
     build: api
     container_name: jast_api
