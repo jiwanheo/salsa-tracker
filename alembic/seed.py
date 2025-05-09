@@ -34,8 +34,19 @@ with engine.connect() as conn:
             conn.commit()
             print("Category 'Lead's left <-> follow's right' seeded.")
         
-
-
+        # Seed "moves" table
+        move_stmt = select(func.count()).select_from(moves_table)
+        move_count = conn.execute(move_stmt).scalar_one()
+        
+        if move_count == 0:
+            print("Seeding moves table")
+            moves_insert_stmt = insert(moves_table).values(move_name="Right turn (follow)", move_category=[1], move_rating="good", 
+                                                           move_video="https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+                                                           move_description="Prep on 123 to bring the arm(s) up, then turn the follow to her right on 567. Versatile move that can be performed in most hand positions")
+            conn.execute(moves_insert_stmt)
+            conn.commit()
+            print("Move 'Right turn (follow)' under category 'Lead's left <-> follow's right' seeded.")
+        
     except SQLAlchemyError as e:
         logger.error(f"Database error while seeding: {e}")
         raise HTTPException(status_code=500, detail="Database error")
