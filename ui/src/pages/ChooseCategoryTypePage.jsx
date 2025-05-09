@@ -37,7 +37,7 @@ export default function ChooseCategoryTypePage() {
                                 textSection={
                                     <div className="text-start">
                                         <h2 className="text-lg font-bold">Positions</h2>
-                                        <p className="text-gray-600">Base positions</p>
+                                        <p className="text-gray-600">Variations from base positions</p>
                                     </div>
                                 } 
                                 onClick={() => handleClickType('positions')}

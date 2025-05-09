@@ -5,7 +5,10 @@ postgres_url = os.getenv("ALEMBIC_DATABASE_URL")
 
 engine = create_engine(postgres_url)
 metadata = MetaData()
+
 users_table = Table("users", metadata, autoload_with=engine)
+categories_table = Table("categories", metadata, autoload_with=engine)
+moves_table = Table("moves", metadata, autoload_with=engine)
 
 with engine.connect() as conn:
     try:
@@ -19,6 +22,17 @@ with engine.connect() as conn:
             conn.execute(user_insert_stmt)
             conn.commit()
             print("User 'jiwan' seeded.")
+        
+        # Seed "categories" table
+        category_stmt = select(func.count()).select_from(categories_table)
+        category_count = conn.execute(category_stmt).scalar_one()
+        
+        if category_count == 0:
+            print("Seeding categories table")
+            categories_insert_stmt = insert(categories_table).values(category_name="Lead's left <-> follow's right", category_type="hands")
+            conn.execute(categories_insert_stmt)
+            conn.commit()
+            print("Category 'Lead's left <-> follow's right' seeded.")
         
 
 
