@@ -34,12 +34,14 @@ jobs:
         run: |
           echo "VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT_PROD }}" >> ui/.env.production
 
-      - name: Build Vite UI
+      - name: Build Vite UI and move to /opt
         run: |
           cd ui
           npm ci
           npm run build
-          pwd
+          sudo mkdir -p /opt/salsa-tracker
+          sudo rm -rf /opt/salsa-tracker/dist
+          sudo mv -f dist /opt/salsa-tracker
 
       
       # - name: Move Vite dist to /opt
