@@ -38,7 +38,7 @@ jobs:
         run: |
           cd ui
           npm ci
-          npm run build
+          npm run build -- --outDir=/opt/salsa-tracker
 
       - name: Copy Vite dist to /opt
         run: |
