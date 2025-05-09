@@ -38,7 +38,7 @@ jobs:
         run: |
           cd ui
           npm ci
-          npm run build -- --outDir=/opt/salsa-tracker
+          sudo npm run build -- --outDir=/opt/salsa-tracker  # sudo for moving to /opt
 
       - name: Start all prod containers
         run: sudo docker compose -f docker-compose-prod.yaml up -d --build
