@@ -43,27 +43,15 @@ jobs:
           sudo rm -rf /opt/salsa-tracker/dist
           sudo mv -f dist /opt/salsa-tracker
 
-      
-      # - name: Move Vite dist to /opt
-      #   run: |
-      #     pwd
-      #     # sudo cp dist /opt/salsa-tracker
-      #     # cd ui
-      #     # npm ci
-      #     # npm run build -- --outDir=/opt/salsa-tracker  # sudo for moving to /opt
-
       - name: Start all prod containers
         run: sudo docker compose -f docker-compose-prod.yaml up -d --build
 
-      # - name: Wait for services to be healthy
-      #   run: |
-      #     sleep 10
-      #     sudo docker compose -f docker-compose-dev.yaml ps
+      - name: Wait for services to be healthy
+        run: |
+          sleep 10
+          sudo docker compose -f docker-compose-dev.yaml ps
           
-      # - name: Run Alembic migrations
-      #   run: make alembic-upgrade
+      - name: Run Alembic migrations
+        run: make alembic-upgrade
 
-      # - name: Run Alembic DB seeding (if necessary)
-      #   run: make alembic-seed
-        
         
