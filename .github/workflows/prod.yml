@@ -38,7 +38,17 @@ jobs:
         run: |
           cd ui
           npm ci
-          sudo -E npm run build -- --outDir=/opt/salsa-tracker  # sudo for moving to /opt
+          npm run build
+          pwd
+
+      
+      # - name: Move Vite dist to /opt
+      #   run: |
+      #     pwd
+      #     # sudo cp dist /opt/salsa-tracker
+      #     # cd ui
+      #     # npm ci
+      #     # npm run build -- --outDir=/opt/salsa-tracker  # sudo for moving to /opt
 
       - name: Start all prod containers
         run: sudo docker compose -f docker-compose-prod.yaml up -d --build
