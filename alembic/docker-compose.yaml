@@ -6,9 +6,10 @@ services:
   alembic:
     build: .
     env_file: 
-      - .env
+      - .env.alembic
     volumes:
     - ./alembic.ini:/alembic/alembic.ini
     - ./migrations:/alembic/migrations
+    - ./seed.py:/alembic/seed.py
     networks:
       - jast_network

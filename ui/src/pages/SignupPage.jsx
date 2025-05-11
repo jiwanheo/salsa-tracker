@@ -40,7 +40,6 @@ export default function LoginPage() {
         } else {
           // If the user was successfully created
           const responseData = await response.json();
-          console.log(responseData);
           setTopPageContextMessage({
             text: 'User created successfully!',
             type: 'success',
@@ -57,10 +56,6 @@ export default function LoginPage() {
         <div className="main-container">
           <div className="d-flex flex-column align-items-center">
           
-            <div className="top-nav mb-5">
-                <BackButton text={"Sign in"} to={"/"}/>
-            </div>
-
             <h1 className="mb-3">Sign up to JAST</h1>
 
             <TextInputContainer>

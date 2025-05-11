@@ -1,0 +1,63 @@
+name: Deploy Prod
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  deploy:
+    runs-on: [self-hosted, server] # This specifies the environment the job will run in
+          
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Create .env file
+        run: |
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+          echo "POSTGRES_URL=${{ secrets.POSTGRES_URL }}" >> .env
+          echo "CORS_ALLOWED=${{ secrets.CORS_ALLOWED_PROD }}" >> .env
+      
+      - name: Create alembic .env file
+        run: |
+          echo "ALEMBIC_DATABASE_URL=${{ secrets.ALEMBIC_DATABASE_URL }}" >> alembic/.env.alembic
+
+      - name: Create Vite .env file
+        run: |
+          echo "VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT_PROD }}" >> ui/.env.production
+
+      - name: Build Vite UI and move to /opt
+        run: |
+          cd ui
+          npm ci
+          npm run build
+          sudo mkdir -p /opt/salsa-tracker
+          sudo rm -rf /opt/salsa-tracker/dist
+          sudo mv -f dist /opt/salsa-tracker
+          # We  may have to restart the nginx container from here (?)
+
+      - name: Start all prod containers
+        run: sudo docker compose -f docker-compose-prod.yaml up -d --build
+
+      - name: Wait for services to be healthy
+        run: |
+          sleep 10
+          sudo docker compose -f docker-compose-dev.yaml ps
+          
+      - name: Run Alembic migrations
+        run: make alembic-upgrade
+
+      # NOT IDEAL!!!! Find a better solution
+      - name: Restart nginx container (in Server)
+        run: |
+          cd /opt/nginx
+          sudo docker compose restart nginx
+        

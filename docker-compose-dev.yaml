@@ -1,0 +1,58 @@
+networks:
+  jast_network:
+    driver: bridge
+    external: false
+    name: jast_network
+
+volumes:
+  jast_db_data:
+  ui_node_modules:
+
+services:
+  db:
+    image: postgres
+    container_name: jast_db
+    env_file:
+      - .env
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    volumes:
+      # Eventually want to mount a data volume
+      - jast_db_data:/var/lib/postgresql/data
+
+    ports:
+      - "5432:5432"
+    networks:
+      - jast_network
+
+  adminer:
+    image: adminer
+    container_name: jast_adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - jast_network
+
+  ui:
+    image: node:18
+    container_name: jast_ui
+    working_dir: /ui  # No extra mounting needed
+    volumes:
+      - ./ui:/ui  # Mount UI source code in production
+      - ui_node_modules:/ui/node_modules  # Keep node_modules in the container
+    ports:
+      - "5173:5173"
+    command: >
+      sh -c "npm install && npm run dev"
+    networks:
+      - jast_network
+  
+  api:
+    build: api
+    container_name: jast_api
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    networks:
+      - jast_network

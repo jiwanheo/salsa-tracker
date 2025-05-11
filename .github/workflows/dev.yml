@@ -1,0 +1,46 @@
+name: Deploy Dev
+
+on:
+  push:
+    branches:
+      - dev
+      
+jobs:
+  deploy:
+    runs-on: [self-hosted, vm] # This specifies the environment the job will run in
+          
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create .env file
+        run: |
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+          echo "POSTGRES_URL=${{ secrets.POSTGRES_URL }}" >> .env
+          echo "CORS_ALLOWED=${{ secrets.CORS_ALLOWED_DEV }}" >> .env
+      
+      - name: Create alembic .env file
+        run: |
+          echo "ALEMBIC_DATABASE_URL=${{ secrets.ALEMBIC_DATABASE_URL }}" >> alembic/.env.alembic
+
+      - name: Create Vite .env file
+        run: |
+          echo "VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT_DEV }}" >> ui/.env.development
+        
+      - name: Start all dev containers
+        run: sudo docker compose -f docker-compose-dev.yaml up -d --build
+
+      - name: Wait for services to be healthy
+        run: |
+          sleep 10
+          sudo docker compose -f docker-compose-dev.yaml ps
+          
+      - name: Run Alembic migrations
+        run: make alembic-upgrade
+
+      - name: Run Alembic DB seeding (if necessary)
+        run: make alembic-seed
+        
+        
