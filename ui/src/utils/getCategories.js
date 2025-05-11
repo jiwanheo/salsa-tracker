@@ -1,13 +1,11 @@
 export const getCategories = async (category_type) => {
     try {
         const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/categories`, window.location.origin);
-        console.log("hello")
-        console.log(url)
     
         if (category_type) {
             url.searchParams.append('category_type', category_type);  // Add category_type as a query parameter
         }
-        console.log(url.toString()) 
+        
         const response = await fetch(url, {
             method: 'GET',
             headers: {

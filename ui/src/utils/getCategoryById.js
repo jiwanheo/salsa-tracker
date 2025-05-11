@@ -1,6 +1,6 @@
 export const getCategoryById = async (category_id) => {
     try {
-        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/category_by_id`);
+        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/category_by_id`, window.location.origin));
     
         url.searchParams.append('category_id', category_id);  
 
