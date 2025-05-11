@@ -57,5 +57,7 @@ jobs:
 
       # NOT IDEAL!!!! Find a better solution
       - name: Restart nginx container (in Server)
-        run: pwd
+        run: |
+          cd /opt/nginx
+          sudo docker compose restart nginx
         
