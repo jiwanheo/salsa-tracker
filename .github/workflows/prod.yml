@@ -55,4 +55,7 @@ jobs:
       - name: Run Alembic migrations
         run: make alembic-upgrade
 
+      # NOT IDEAL!!!! Find a better solution
+      - name: Restart nginx container (in Server)
+        run: pwd
         
