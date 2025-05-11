@@ -42,6 +42,7 @@ jobs:
           sudo mkdir -p /opt/salsa-tracker
           sudo rm -rf /opt/salsa-tracker/dist
           sudo mv -f dist /opt/salsa-tracker
+          # We  may have to restart the nginx container from here (?)
 
       - name: Start all prod containers
         run: sudo docker compose -f docker-compose-prod.yaml up -d --build
