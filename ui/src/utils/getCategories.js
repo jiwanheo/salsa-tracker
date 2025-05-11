@@ -1,6 +1,6 @@
 export const getCategories = async (category_type) => {
     try {
-        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/categories`);
+        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/categories`, window.location.origin);
         console.log("hello")
         console.log(url)
     

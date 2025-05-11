@@ -18,6 +18,7 @@ export default function ChooseCategoryPage() {
 
     useEffect(() => {
         const fetchCategoriesData = async () => {
+            console.log("hello")
             const fetchedCategories = await getCategories(categoryType)
 
             setCategories(fetchedCategories); 
