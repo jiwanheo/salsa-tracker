@@ -1,6 +1,6 @@
 export const getMovesByCategory = async (category) => {
     try {
-        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/moves_by_category`);
+        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/moves_by_category`, window.location.origin);
     
         url.searchParams.append('category', category);  
 

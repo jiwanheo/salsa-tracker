@@ -167,13 +167,15 @@ CORS in the API
 
 ### Fixed
 
-## 2025-05-07 - [Unreleased]
+## 2025-05-08 - [Unreleased]
  
 ### Added
 
 - Dev pipeline 
     - Add DB seeding
-
+- Prod pipeilne
+    - Pretty much the same stuff with Dev, but we're not using a node container for UI now.
+    
 ### Changed
 
 ### Fixed
