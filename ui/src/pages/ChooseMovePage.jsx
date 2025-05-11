@@ -21,7 +21,6 @@ export default function ChooseMovePage() {
     useEffect(() => {
         const fetchMovesData = async () => {
             const fetchedMoves = await getMovesByCategory(category);
-            console.log(fetchedMoves)
             setMoves(fetchedMoves); 
         };
         fetchMovesData();

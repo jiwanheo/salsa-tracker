@@ -40,7 +40,6 @@ export default function LoginPage() {
         } else {
           // If the user was successfully created
           const responseData = await response.json();
-          console.log(responseData);
           setTopPageContextMessage({
             text: 'User created successfully!',
             type: 'success',
