@@ -17,7 +17,6 @@ export default function SettingAddMovePage() {
 
     const [categoryOptions, setCategoryOptions] = useState([]);
     
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -89,8 +88,6 @@ export default function SettingAddMovePage() {
             move_categories: newMoveCategories_ids,
             move_rating: encodeURIComponent(newMoveRating)
         };
-
-        console.log(moveData)
 
         try {
             // Send the POST request

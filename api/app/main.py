@@ -4,7 +4,7 @@ from typing import List, Optional
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from sqlalchemy import create_engine, MetaData, Table, select, insert
+from sqlalchemy import create_engine, MetaData, Table, select, insert, update, values
 from sqlalchemy.exc import SQLAlchemyError
 import re
 
@@ -173,7 +173,7 @@ async def get_categories(category_type: Optional[str] = None):
         logger.error(f"Database error while checking user: {e}")
         raise HTTPException(status_code=500, detail="Database error") 
 
-@app.get("/category_by_id")
+@app.get("/category-by-id")
 async def get_category_by_id(category_id: int):
     try:
         with engine.connect() as conn:
@@ -224,7 +224,35 @@ async def create_move(move: CreateMoveRequest):
             logger.error(f"Database error while creating move: {e}")
             raise HTTPException(status_code=500, detail="Database error")
 
-@app.get("/moves_by_category")
+@app.put("/edit-move", response_model=CreateMoveResponse)
+async def edit_move(id: int, move: CreateMoveRequest):
+    # Decode any URL-encoded characters
+    move_name = unquote(move.move_name)
+    move_video = unquote(move.move_video)
+    move_description = unquote(move.move_description)
+    move_categories = move.move_categories
+    move_rating = unquote(move.move_rating)
+
+    stmt = (
+        update(moves_table)
+        .where(moves_table.c.move_id == id)
+        .values(move_id=id, move_name=move_name, move_video=move_video, move_description=move_description, move_category=move_categories, move_rating=move_rating)
+    )
+
+    try:
+        with engine.begin() as conn:
+            result = conn.execute(stmt)
+
+            if result.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Move not found")
+
+        return {"success": True, "id": id}
+
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while updating move: {e}")
+        raise HTTPException(status_code=500, detail="Database error")
+
+@app.get("/moves-by-category")
 async def get_moves_by_category(category: int):
     try:
         with engine.connect() as conn:
@@ -237,6 +265,46 @@ async def get_moves_by_category(category: int):
             moves = [dict(zip(column_names, row)) for row in rows]
 
             return moves
+
+    except SQLAlchemyError as e:
+            logger.error(f"Database error while creating move: {e}")
+            raise HTTPException(status_code=500, detail="Database error")
+
+@app.get("/all-moves-id-name")
+async def get_all_moves_id_name():
+    try:
+        with engine.connect() as conn:
+            stmt = select(moves_table)
+            
+            result = conn.execute(stmt)
+            rows = result.fetchall()
+
+            column_names = ["move_id", "move_name"]
+            moves = [dict(zip(column_names, row)) for row in rows]
+
+            return moves
+
+    except SQLAlchemyError as e:
+            logger.error(f"Database error while creating move: {e}")
+            raise HTTPException(status_code=500, detail="Database error")
+
+# Then make an endpoint that takes an id, and return all information
+@app.get("/move-by-id")
+async def get_move_by_id(id: int):
+    try:
+        with engine.connect() as conn:
+            stmt = select(moves_table).where(moves_table.c.move_id == id)
+            
+            result = conn.execute(stmt)
+            row = result.fetchone()  # Use fetchone instead of fetchall
+
+            if row is None:
+                return None  # or raise an exception if that's preferred
+
+            column_names = moves_table.columns.keys()
+            move = dict(zip(column_names, row))
+
+            return move
 
     except SQLAlchemyError as e:
             logger.error(f"Database error while creating move: {e}")

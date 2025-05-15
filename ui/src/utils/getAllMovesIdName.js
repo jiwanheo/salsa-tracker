@@ -1,9 +1,7 @@
-export const getCategoryById = async (category_id) => {
+export const getAllMovesIdName = async () => {
     try {
-        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/category-by-id`, window.location.origin);
+        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/all-moves-id-name`, window.location.origin);
     
-        url.searchParams.append('category_id', category_id);  
-
         const response = await fetch(url, {
             method: 'GET',
             headers: {
