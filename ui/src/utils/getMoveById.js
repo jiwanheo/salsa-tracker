@@ -1,7 +1,9 @@
-export const getAllMovesIdName = async () => {
+export const getMoveById = async (move_id) => {
     try {
-        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/all-moves-id-name`, window.location.origin);
+        const url = new URL(`${import.meta.env.VITE_API_ENDPOINT}/move-by-id`, window.location.origin);
     
+        url.searchParams.append('id', move_id);  
+
         const response = await fetch(url, {
             method: 'GET',
             headers: {
