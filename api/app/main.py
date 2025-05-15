@@ -241,3 +241,25 @@ async def get_moves_by_category(category: int):
     except SQLAlchemyError as e:
             logger.error(f"Database error while creating move: {e}")
             raise HTTPException(status_code=500, detail="Database error")
+
+@app.get("/all_moves_id_name")
+async def get_all_moves_id_name():
+    try:
+        with engine.connect() as conn:
+            stmt = select(moves_table)
+            
+            result = conn.execute(stmt)
+            rows = result.fetchall()
+
+            column_names = ["move_id", "move_name"]
+            moves = [dict(zip(column_names, row)) for row in rows]
+
+            return moves
+
+    except SQLAlchemyError as e:
+            logger.error(f"Database error while creating move: {e}")
+            raise HTTPException(status_code=500, detail="Database error")
+
+# Then make an endpoint that takes an id, and return all information
+# @app.get("/moves_by_id")
+# async def get_moves_by_id(id: int):
