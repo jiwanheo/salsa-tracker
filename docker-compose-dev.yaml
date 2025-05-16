@@ -50,6 +50,10 @@ services:
   api:
     build: api
     container_name: jast_api
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
     env_file:
       - .env
     ports:
