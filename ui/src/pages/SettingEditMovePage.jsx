@@ -204,7 +204,7 @@ export default function SettingEditMovePage() {
             onChange={(e) => setNewMoveDescription(e.target.value)}
         />
 
-        <span>Move Video URL</span>
+        <span>Move Video ID</span>
         <input
             type="text"
             value={newMoveVideo}
