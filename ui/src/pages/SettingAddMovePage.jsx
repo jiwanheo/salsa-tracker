@@ -146,7 +146,7 @@ export default function SettingAddMovePage() {
                     className="form-control"
                     value={newMoveVideo}
                     onChange={(e) => setNewMoveVideo(e.target.value)}
-                    placeholder="New move video URL"
+                    placeholder="New move video ID"
                 />
 
                 <textarea

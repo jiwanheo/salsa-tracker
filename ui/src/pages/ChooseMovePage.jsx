@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getMovesByCategory } from "../utils/getMovesByCategory";
 import { getCategoryById } from "../utils/getCategoryById";
+import { getImmichAsset } from "../utils/getImmichAsset";
 
 export default function ChooseMovePage() {
     const location = useLocation();
@@ -17,7 +18,9 @@ export default function ChooseMovePage() {
 
     const [categoryName, setCategoryName] = useState([]);
     const [moves, setMoves] = useState([]);
-    
+    const [videoUrls, setVideoUrls] = useState({});
+
+
     useEffect(() => {
         const fetchMovesData = async () => {
             const fetchedMoves = await getMovesByCategory(category);
@@ -31,7 +34,23 @@ export default function ChooseMovePage() {
         };
         fetchCategoryName();
     }, [category]);
-    
+
+    // After fetching moves, fetch their videos
+    useEffect(() => {
+        const fetchAllVideos = async () => {
+            const newVideoUrls = {};
+            await Promise.all(
+                moves.map(async (data) => {
+                    const videoUrl = await getImmichAsset(data.move_video);
+                    newVideoUrls[data.move_video] = videoUrl;
+                })
+            );
+            setVideoUrls(newVideoUrls);
+        };
+
+        fetchAllVideos();
+    }, [moves]);
+
     return (
 
         <div className="main-container">
@@ -41,15 +60,17 @@ export default function ChooseMovePage() {
                 <CardsContainer 
                     cards={
                         <>
-                            {moves.map((data, index) => (
-                                <MoveCard 
-                                    key={index}
-                                    moveName={data.move_name} 
-                                    moveDescription={data.move_description} 
-                                    rating={data.move_rating} 
-                                    video={data.move_video} 
-                                />
-                            ))}
+                            {moves.map((data, index) => {
+                                return(
+                                    <MoveCard 
+                                        key={index}
+                                        moveName={data.move_name} 
+                                        moveDescription={data.move_description} 
+                                        rating={data.move_rating} 
+                                        video={videoUrls[data.move_video] || null} 
+                                    />
+                                )
+                            })}
                         </>   
                     }> 
                 </CardsContainer>

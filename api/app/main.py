@@ -1,8 +1,10 @@
 import logging
 import os
 from typing import List, Optional
-from fastapi import FastAPI, Request, HTTPException
+import requests
+from fastapi import FastAPI, Request, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from sqlalchemy import create_engine, MetaData, Table, select, insert, update, values
 from sqlalchemy.exc import SQLAlchemyError
@@ -24,6 +26,7 @@ metadata = MetaData()
 users_table = Table("users", metadata, autoload_with=engine)
 categories_table = Table("categories", metadata, autoload_with=engine)
 moves_table = Table("moves", metadata, autoload_with=engine)
+
 
 app = FastAPI()
 
@@ -309,3 +312,41 @@ async def get_move_by_id(id: int):
     except SQLAlchemyError as e:
             logger.error(f"Database error while creating move: {e}")
             raise HTTPException(status_code=500, detail="Database error")
+
+# IMMICH ENDPOINTS
+
+IMMICH_API_KEY = os.getenv("IMMICH_API_KEY")
+IMMICH_URL = "https://media.jiwan.homes/api"
+IMMICH_MEDIA_DIR = "/tmp/videos"
+
+os.makedirs(IMMICH_MEDIA_DIR, exist_ok=True)
+
+@app.get("/media")
+def get_immich_asset(asset_id: str):
+
+    # If exists already, return it
+    file_path = os.path.join(IMMICH_MEDIA_DIR, f"{asset_id}.mp4")
+    if os.path.exists(file_path):
+        return FileResponse(file_path, media_type="video/mp4")
+
+    # If not, fetch it
+    url = f"{IMMICH_URL}/assets/{asset_id}/original"
+    headers = {
+        "x-api-key": IMMICH_API_KEY,
+        "Accept": "video/mp4"
+    }
+
+    try:
+        response = requests.get(url, headers=headers, stream=True)
+        response.raise_for_status()  # Raise if not 200
+
+        # Save to file
+        with open(file_path, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+
+        return FileResponse(file_path, media_type="video/mp4")
+
+    except requests.RequestException as e:
+        raise HTTPException(status_code=502, detail=f"Failed to fetch asset from Immich: {e}")

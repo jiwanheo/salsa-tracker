@@ -41,7 +41,7 @@ with engine.connect() as conn:
         if move_count == 0:
             print("Seeding moves table")
             moves_insert_stmt = insert(moves_table).values(move_name="Right turn (follow)", move_category=[1], move_rating="good", 
-                                                           move_video="https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+                                                           move_video="bd591783-7a7b-42d5-8734-004e28e10b59",
                                                            move_description="Prep on 123 to bring the arm(s) up, then turn the follow to her right on 567. Versatile move that can be performed in most hand positions")
             conn.execute(moves_insert_stmt)
             conn.commit()
