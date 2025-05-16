@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - dev
-      
+  pull_request:
+    branches:
+      - dev
+
 jobs:
   deploy:
     runs-on: [self-hosted, vm] # This specifies the environment the job will run in
