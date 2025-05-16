@@ -25,6 +25,7 @@ jobs:
           echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
           echo "POSTGRES_URL=${{ secrets.POSTGRES_URL }}" >> .env
           echo "CORS_ALLOWED=${{ secrets.CORS_ALLOWED_PROD }}" >> .env
+          echo "IMMICH_API_KEY=${{ secrets.IMMICH_API_KEY }}" >> .env
       
       - name: Create alembic .env file
         run: |
