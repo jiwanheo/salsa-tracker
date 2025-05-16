@@ -18,7 +18,7 @@ services:
     shm_size: 128mb
     volumes:
       - jast_db_data:/var/lib/postgresql/data
-
+    restart: unless-stopped
     ports:
       - "5432:5432"
     networks:
@@ -27,6 +27,7 @@ services:
   adminer:
     image: adminer
     container_name: jast_adminer
+    restart: unless-stopped
     ports:
       - "8080:8080"
     networks:
@@ -35,6 +36,7 @@ services:
   api:
     build: api
     container_name: jast_api
+    restart: unless-stopped
     env_file:
       - .env
     ports:
